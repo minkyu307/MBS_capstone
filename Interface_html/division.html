@@ -7,7 +7,7 @@
 	
 	div.button{
 		margin-left: 45%;
-		margin-top: 300px;
+		margin-top: 30px;
 	}
 	div.button input	
 	{
@@ -24,14 +24,19 @@
     	font-size: 22px; 
     	font-weight: 500;
 	}
-
+  .welcome{
+    font-size: 40px;
+    margin-left: 45%;
+  margin-top: 300px;
+  }
 </style>
 <body style="background-color: rgb(245, 255, 245);">
+  <div class="welcome">환영합니다.</div>
 	<div class="button">
 
-    <input type="button" value="분할하지 않음"/><br/><br/>
-     <input type="button" value="2분할" /><br/><br/>
-      <input type="button" value="4분할"/><br/>
+    <input type="button" value="분할하지 않음" onClick="location.href='NotDiv.html'"/><br/><br/>
+     <input type="button" value="2분할" onClick="location.href='2Div.html'"/><br/><br/>
+      <input type="button" value="4분할" onClick="location.href='4Div.html'"/><br/>
 
 </div>
 <script type="text/javascript">
