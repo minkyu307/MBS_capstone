@@ -7,8 +7,18 @@
     <style type="text/css">
         *{ margin: 0; padding: 0; }
 
-        .chat_wrap .header {  font-size: 25px; padding: 10px 0; background-color: lightgreen; color: white; text-align: center;  }
-
+        .chat_wrap .header {  font-size: 25px; padding: 15px; background-color: lightgreen; color: white; text-align: center; }
+        .idlogout{
+            font-size: 15px;
+            float: right;
+            margin-right: 20px;
+        }
+        .logoutbtn{
+            padding: 2px;
+            background-color: lightgreen;
+            color: gray;
+            border:2px solid gray;
+        }
         .chat_wrap .chat { padding-bottom: 80px; }
         .chat_wrap .chat ul { width: 100%; list-style: none; }
         .chat_wrap .chat ul li { width: 100%; }
@@ -30,6 +40,8 @@
     <div class="chat_wrap">
         <div class="header">
             CHAT
+            <span class="idlogout">님<br><button class="logoutbtn">LogOut</button></span>
+
         </div>
         <div class="chat">
             <ul>
