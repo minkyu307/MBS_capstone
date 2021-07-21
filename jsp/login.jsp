@@ -1,10 +1,13 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MBS_ProtoType</title>
-    <style type="text/css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MBS_ProtoType</title>
+</head>
+<style type="text/css">
 
         .login_container{
             width: 380px; 
@@ -75,16 +78,12 @@
         }
     }
 </style>
-<script>
-	
-</script>
-</head>
 <body>
-	<div id="container" class="main_container">
+<div id="container" class="main_container">
         <div style="padding: 20px;"></div>
         <div class="login_container">
             <div class="form_container">
-                <form name="login_form" action="division.html" method="get">
+                <form name="login_form" action="loginAction.jsp" method="post">
                     <div class="form_title_div">
                         <p class="form_title_p">LogIn</p>
                     </div>
@@ -118,10 +117,10 @@
                         </button>
                     </div>
                 </form>
-                <button class="form_submit_button2" type="button" onclick="location.href='join.html'">Join</button>
+                <button class="form_submit_button2" type="button" onclick="location.href='join.jsp'">Join</button>
             </div>
         </div>
     </div>
-
+    
 </body>
 </html>

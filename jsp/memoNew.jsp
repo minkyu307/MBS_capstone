@@ -1,10 +1,13 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8" import="java.sql.*"%>
+
 <!DOCTYPE html>
 <html>
-
 <head>
-	<title></title>
-</head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <style type="text/css">
 	*{ margin: 0; padding: 0; }
 
@@ -47,29 +50,27 @@
         height: 30px;
 	}
 </style>
+<title>Insert title here</title>
+<%
+	int idx=Integer.parseInt(request.getParameter("idx"));
+%>
+</head>
 <body>
-	<div class="board_wrap">
+<div class="board_wrap">
 		<div class="header">
-			MEMO UPDATE
+			NEW MEMO
 		</div>
-		<form method = "get" action = "write_action.php">
+		<form method = "get" action = "memoNewAction.jsp">
 			<table  style="padding-top:50px" align = center width=700 border=0 cellpadding=2 >
-
 				<tr>
 					<td bgcolor=white>
-						<table class = "table2">ss
-							
-
-							
-								<td><textarea name = content style="width: 97%; height: 300px;">11
+						<table class = "table2">	
+								<td><textarea name = content style="width: 97%; height: 300px;">
 								</textarea></td>
-							
-
-							
 						</table>
-
+						<input style="display:none" name="idx" type="text" value="<%=idx%>">
 						<center>
-							<input class="btn" type = "submit" value="수정">
+							<input class="btn" type = "submit" value="저장">
 						</center>
 					</td>
 				</tr>
@@ -78,11 +79,3 @@
 	</div>
 </body>
 </html>
-
-<% 
-	PrintWriter script = response.getWriter();
-	script.println("<script>");
-	script.println("alert('수정 성공')");
-	script.println("location.href='memoList.jsp'");
-	script.println("</script>");
-%>

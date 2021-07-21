@@ -1,0 +1,46 @@
+<%@page import="java.io.PrintWriter" import="java.sql.*"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<% request.setCharacterEncoding("utf-8"); %>
+<%
+String content=request.getParameter("content");
+int idx=Integer.parseInt(request.getParameter("idx"));
+
+Connection conn=null;
+PreparedStatement pstmt=null;
+ResultSet rs=null;
+int row=0;
+String dbURL = "jdbc:mysql://localhost:3306/mbsdb?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC";
+String dbID = "root";
+String dbPassword = "1248";
+String query="INSERT INTO memo(memoContent, time, writerID) VALUES(?, ?, ?)";
+Class.forName("com.mysql.cj.jdbc.Driver");
+try{
+	conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
+	pstmt=conn.prepareStatement(query);
+	pstmt.setString(1,content);
+	pstmt.setTimestamp(2,new Timestamp(System.currentTimeMillis()));
+	pstmt.setInt(3,idx);
+	pstmt.executeUpdate();
+	}catch (Exception e) {
+			e.printStackTrace();
+	}
+%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<%
+PrintWriter script = response.getWriter();
+script.println("<script>");
+script.println("alert('저장 성공!')");
+script.println("location.href='memoList.jsp'");
+script.println("</script>");
+
+%>
+
+</body>
+</html>

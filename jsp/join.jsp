@@ -1,10 +1,13 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MBS_ProtoType</title>
-    <style type="text/css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>join</title>
+</head>
+<style type="text/css">
 
         .login_container{
             width: 380px; 
@@ -75,16 +78,12 @@
         }
     }
 </style>
-<script>
-	
-</script>
-</head>
 <body>
 	<div id="container" class="main_container">
         <div style="padding: 20px;"></div>
         <div class="login_container">
             <div class="form_container">
-                <form name="login_form" action="MBS_ProtoType.html" method="get">
+                <form name="login_form" action="joinAction.jsp" method="post">
                     <div class="form_title_div">
                         <p class="form_title_p">Register</p>
                     </div>
@@ -132,7 +131,7 @@
                             <div id="alert_password" class="form_text_alert"></div>
                         </div>
                     </div>
-                     <div>
+                    <div>
                         <div>
                             <a class="form_item_name">Department</a>
                         </div>
@@ -148,7 +147,7 @@
                             <a class="form_item_name">position</a>
                         </div>
                         <div>
-                            <input type="text" name="email" placeholder="Enter your position in department" class="form_input" />
+                            <input type="text" name="position" placeholder="Enter your position in department" class="form_input" />
                         </div>
                         <div class="form_text_alert_padding">
                             <div id="alert_password" class="form_text_alert"></div>
@@ -159,7 +158,7 @@
                             <a class="form_item_name">call</a>
                         </div>
                         <div>
-                            <input type="text" name="email" placeholder="Enter your call number" class="form_input" />
+                            <input type="text" name="call" placeholder="Enter your call number" class="form_input" />
                         </div>
                         <div class="form_text_alert_padding">
                             <div id="alert_password" class="form_text_alert"></div>
@@ -175,6 +174,5 @@
             </div>
         </div>
     </div>
-
 </body>
 </html>
