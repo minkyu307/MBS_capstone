@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.Optional;
+
 @Transactional
 @Component
 public class MemoService {
@@ -20,5 +23,13 @@ public class MemoService {
     public Long join(Memo memo) {
         memoRepository.save(memo);
         return memo.getId();
+    }
+
+    public List<Memo> findMemos() {
+        return memoRepository.findALl();
+    }
+
+    public Optional<Memo> findOne(Long memoId) {
+        return memoRepository.findById(memoId);
     }
 }

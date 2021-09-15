@@ -33,4 +33,8 @@ public class MemberService {
     public Optional<Member> findOne(Long memberId) {
         return memberRepository.findById(memberId);
     }
+
+    public void clearPersist() {
+        memberRepository.clearPersist();
+    }
 }

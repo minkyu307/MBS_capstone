@@ -30,4 +30,9 @@ public class MemberRepository {
     public List<Member> findAll() {
         return em.createQuery("select m from Member m", Member.class).getResultList();
     }
+
+    public void clearPersist() {
+        em.flush();
+        em.clear();
+    }
 }

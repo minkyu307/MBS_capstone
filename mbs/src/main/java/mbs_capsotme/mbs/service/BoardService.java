@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.Optional;
+
 @Transactional
 @Component
 public class BoardService {
@@ -20,5 +23,17 @@ public class BoardService {
     public Long join(Board board) {
         boardRepository.save(board);
         return board.getId();
+    }
+
+    public List<Board> findBoards() {
+        return boardRepository.findAll();
+    }
+
+    public Optional<Board> findOne(Long boardId) {
+        return boardRepository.findById(boardId);
+    }
+
+    public void clearPersist() {
+        boardRepository.clearPersist();
     }
 }
