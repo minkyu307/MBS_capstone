@@ -17,13 +17,18 @@ public class DepartmentRepository {
         this.em = em;
     }
 
-    public Department save(Department department) {
+    public void save(Department department) {
         em.persist(department);
-        return department;
     }
 
     public Optional<Department> findById(Long id) {
         return Optional.ofNullable(em.find(Department.class, id));
+    }
+
+    public Optional<Department> findByName(String name) {
+        Department department = em.createQuery(
+                "select d from Department d where department_name='"+name+"'",Department.class).getSingleResult();
+        return Optional.ofNullable(department);
     }
 
     public List<Department> findAll() {

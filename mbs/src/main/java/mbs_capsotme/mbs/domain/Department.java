@@ -20,6 +20,7 @@ public class Department {
     private Long id;
     private int numberOfMember;
     private Long director_id;
+    private String departmentName;
 
     @OneToMany(mappedBy = "department")
     private List<Member> members = new ArrayList<>();

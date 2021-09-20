@@ -56,7 +56,7 @@ public class JpaDataTest {
         for (int i = 0; i < 5; i++) {
             Department department = new Department();
             department.setNumberOfMember(i+1);
-            departmentService.join(department);
+            departmentService.save(department);
         }
     }
 

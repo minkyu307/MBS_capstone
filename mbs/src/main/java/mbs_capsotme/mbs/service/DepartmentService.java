@@ -22,9 +22,8 @@ public class DepartmentService {
         this.departmentRepository = departmentRepository;
     }
 
-    public Long join(Department department) {
+    public void save(Department department) {
         departmentRepository.save(department);
-        return department.getId();
     }
 
     public List<Department> findDepartments(){
@@ -33,5 +32,9 @@ public class DepartmentService {
 
     public Optional<Department> findOne(Long departmentId) {
         return departmentRepository.findById(departmentId);
+    }
+
+    public Optional<Department> findOne(String name) {
+        return departmentRepository.findByName(name);
     }
 }
