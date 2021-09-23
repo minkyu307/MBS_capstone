@@ -39,4 +39,23 @@ public class Member {
 
     @OneToMany(mappedBy = "member")
     private List<Memo> memos = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return "Member{" +
+                "id=" + id +
+                ", login_id='" + login_id + '\'' +
+                ", password='" + password + '\'' +
+                ", createTime=" + createTime +
+                ", memberName='" + memberName + '\'' +
+                ", address='" + address + '\'' +
+                ", email='" + email + '\'' +
+                ", loginStatus=" + loginStatus +
+                ", position='" + position + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", department=" + department +
+                ", boards=" + boards +
+                ", memos=" + memos +
+                '}';
+    }
 }

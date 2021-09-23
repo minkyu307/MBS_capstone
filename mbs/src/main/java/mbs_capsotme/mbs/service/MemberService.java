@@ -34,6 +34,10 @@ public class MemberService {
         return memberRepository.findById(memberId);
     }
 
+    public Optional<Member> findByLoginId(String loginId) {
+        return memberRepository.findByLoginId(loginId);
+    }
+
     public void clearPersist() {
         memberRepository.clearPersist();
     }

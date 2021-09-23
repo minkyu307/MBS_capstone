@@ -1,5 +1,6 @@
 package mbs_capsotme.mbs.repository;
 
+import mbs_capsotme.mbs.domain.Department;
 import mbs_capsotme.mbs.domain.Member;
 import org.springframework.stereotype.Component;
 
@@ -29,6 +30,11 @@ public class MemberRepository {
 
     public List<Member> findAll() {
         return em.createQuery("select m from Member m", Member.class).getResultList();
+    }
+
+    public Optional<Member> findByLoginId(String loginId){
+        return Optional.ofNullable(em.createQuery(
+                "select m from Member m where login_id = '"+loginId+"'", Member.class).getSingleResult());
     }
 
     public void clearPersist() {

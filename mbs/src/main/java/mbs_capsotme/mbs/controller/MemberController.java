@@ -5,8 +5,10 @@ import mbs_capsotme.mbs.domain.Member;
 import mbs_capsotme.mbs.service.DepartmentService;
 import mbs_capsotme.mbs.service.MemberService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Optional;
 
@@ -43,5 +45,28 @@ public class MemberController {
         member.setDepartment(department);
         memberService.join(member);
         return "redirect:/";
+    }
+
+    @RequestMapping(value = "/members/login")
+    public String logIn(MemberForm memberForm, Model model) {
+
+        String loginId = memberForm.getLogin_id();
+        String password = memberForm.getPassword();
+        Member member = new Member();
+
+        try {
+            member = memberService.findByLoginId(loginId).get();
+        }catch (Exception e){
+            model.addAttribute("loginError","ID가 일치하지 않습니다.");
+            return "home";
+        }
+
+        if(!password.equals(member.getPassword())){
+            model.addAttribute("loginError","비밀번호가 일치하지 않습니다.");
+            return "home";
+        }
+
+        memberForm.setMemberName(member.getMemberName());
+        return "division";
     }
 }

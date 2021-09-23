@@ -20,4 +20,21 @@ public class MemberForm {
     private String position;
     private String phoneNumber;
     private String departmentName;
+
+    @Override
+    public String toString() {
+        return "MemberForm{" +
+                "id=" + id +
+                ", login_id='" + login_id + '\'' +
+                ", password='" + password + '\'' +
+                ", createTime=" + createTime +
+                ", memberName='" + memberName + '\'' +
+                ", address='" + address + '\'' +
+                ", email='" + email + '\'' +
+                ", loginStatus=" + loginStatus +
+                ", position='" + position + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", departmentName='" + departmentName + '\'' +
+                '}';
+    }
 }
