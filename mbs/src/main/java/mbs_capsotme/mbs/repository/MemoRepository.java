@@ -1,5 +1,6 @@
 package mbs_capsotme.mbs.repository;
 
+import mbs_capsotme.mbs.domain.Member;
 import mbs_capsotme.mbs.domain.Memo;
 import org.springframework.stereotype.Component;
 
@@ -28,5 +29,10 @@ public class MemoRepository {
 
     public List<Memo> findALl() {
         return em.createQuery("select m from Memo m", Memo.class).getResultList();
+    }
+
+    public List<Memo> findAllByMember(Member member){
+        return em.createQuery("select m from Memo m inner join m.member b where b=: member1")
+                .setParameter("member1",member).getResultList();
     }
 }

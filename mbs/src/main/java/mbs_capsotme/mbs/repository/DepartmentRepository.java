@@ -34,4 +34,9 @@ public class DepartmentRepository {
     public List<Department> findAll() {
         return em.createQuery("select d from Department d", Department.class).getResultList();
     }
+
+    public void clearPersist() {
+        em.flush();
+        em.clear();
+    }
 }

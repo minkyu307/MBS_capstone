@@ -37,4 +37,8 @@ public class DepartmentService {
     public Optional<Department> findOne(String name) {
         return departmentRepository.findByName(name);
     }
+
+    public void clearPersist() {
+        departmentRepository.clearPersist();
+    }
 }

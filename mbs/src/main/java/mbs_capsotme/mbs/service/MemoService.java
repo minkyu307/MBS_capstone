@@ -1,5 +1,6 @@
 package mbs_capsotme.mbs.service;
 
+import mbs_capsotme.mbs.domain.Member;
 import mbs_capsotme.mbs.domain.Memo;
 import mbs_capsotme.mbs.repository.MemoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,5 +32,9 @@ public class MemoService {
 
     public Optional<Memo> findOne(Long memoId) {
         return memoRepository.findById(memoId);
+    }
+
+    public List<Memo> findAllByMember(Member member){
+        return memoRepository.findAllByMember(member);
     }
 }
