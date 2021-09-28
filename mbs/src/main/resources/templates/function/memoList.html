@@ -78,11 +78,12 @@ ul, li {
 } /*제목 열 크기*/
 
 #ulTable>li>ul>li:first-child+li+li {
-	width: 10%;
+	width: 12.5%;
 } /*작성일 열 크기*/
 
-#ulTable > li > ul > li:first-child +li+li+li     {width:20%;}
+#ulTable > li > ul > li:first-child +li+li+li     {width:12.5%;}
 #ulTable > li > ul > li:first-child +li+li+li+li     {width:10%;}
+#ulTable > li > ul > li:first-child +li+li+li+li+li     {width:5%;}
 
 #divPaging {
 	clear: both;
@@ -163,22 +164,24 @@ ul, li {
                         <li>작성일</li>
                         <li>최종수정일</li>
                         <li>작성자</li>
+                        <li>&nbsp</li>
                     </ul>
                 </li>
                 <!-- 게시물이 출력될 영역 -->
                 <li>
-                    <ul>
-                        <li>memoid</li>
-                        <li>content</li>
-                        <li>createtime</li>
-                        <li>lasttime
-                            <input type="button" class="btndel" value="삭제">
+                    <ul th:each="memo : ${memos}">
+                        <li th:text="${memo.id}">NULL</li>
+                        <li th:text="${memo.contents}">NULL</li>
+                        <li th:text="${memo.createTime}">NULL</li>
+                        <li th:text="${memo.lastModifiedTime}">NULL</li>
+                        <li th:text="${memo.member.memberName}"></li>
+                        <li>
+                            <button class="btndel">
+                                <a style="text-decoration:none" th:href="@{/memo/delete(id=${memo.id})}">삭제</a>
+                            </button>
                         </li>
-                        <li>userid</li>
                     </ul>
                 </li>
-
-
             </ul> <!-- 게시판 페이징 영역 --> <!-- 검색 폼 영역 -->
             <div>
                 <input type="button"  class="btn_new" value="새 메모">

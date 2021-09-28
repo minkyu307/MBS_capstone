@@ -33,6 +33,25 @@ public class MemoController {
             System.out.println("memo.getContents() = " + memo.getContents());
         }
 
+        model.addAttribute("memos",memos);
+
+        return "function/memoList";
+    }
+
+    @RequestMapping(value = "/memo/delete")
+    public String deleteMemo(HttpServletRequest req, Model model){
+        Long id = Long.parseLong(req.getParameter("id"));
+        memoService.deleteMemo(id);
+        HttpSession session = req.getSession();
+        Member member = (Member)session.getAttribute("member");
+        List<Memo> memos = memoService.findAllByMember(member);
+
+        for (Memo memo : memos) {
+            System.out.println("memo.getContents() = " + memo.getContents());
+        }
+
+        model.addAttribute("memos",memos);
+
         return "function/memoList";
     }
 }

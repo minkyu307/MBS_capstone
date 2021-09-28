@@ -35,4 +35,9 @@ public class MemoRepository {
         return em.createQuery("select m from Memo m inner join m.member b where b=: member1")
                 .setParameter("member1",member).getResultList();
     }
+
+    public void deleteMemo(Long id){
+        em.createQuery("delete from Memo m where m.id=:mid").setParameter("mid",id).executeUpdate();
+
+    }
 }

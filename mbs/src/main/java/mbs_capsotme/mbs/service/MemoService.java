@@ -37,4 +37,8 @@ public class MemoService {
     public List<Memo> findAllByMember(Member member){
         return memoRepository.findAllByMember(member);
     }
+
+    public void deleteMemo(Long id){
+        memoRepository.deleteMemo(id);
+    }
 }
