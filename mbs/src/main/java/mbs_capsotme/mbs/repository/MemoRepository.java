@@ -40,4 +40,9 @@ public class MemoRepository {
         em.createQuery("delete from Memo m where m.id=:mid").setParameter("mid",id).executeUpdate();
 
     }
+
+    public void clearPersist() {
+        em.flush();
+        em.clear();
+    }
 }

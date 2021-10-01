@@ -32,13 +32,21 @@ public class JpaDataTest {
     @Autowired
     EntityManager em;
 
+    @Test
+    void 부서만들기(){
+        Department d= new Department();
+        d.setDirector_id(1L);
+        d.setDepartmentName("인사과");
+        d.setNumberOfMember(0);
+        departmentService.save(d);
+    }
 
     @Test
     void 저장테스트() {
         for (int i = 0; i < 5; i++) {
             Member member = new Member();
             member.setMemberName("A"+i);
-            memberService.join(member);
+            memberService.joinAndSave(member);
         }
 
         for (int i = 0; i < 5; i++) {
@@ -50,7 +58,7 @@ public class JpaDataTest {
         for (int i = 0; i < 5; i++) {
             Memo memo = new Memo();
             memo.setContents("A" + i);
-            memoService.join(memo);
+            memoService.save(memo);
         }
 
         for (int i = 0; i < 5; i++) {
@@ -105,7 +113,7 @@ public class JpaDataTest {
     void 조인테스트() {
         Member member = new Member();
         member.setMemberName("kim");
-        memberService.join(member);
+        memberService.joinAndSave(member);
 
         Board board = new Board();
         board.setContents("Hello");

@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 @Controller
@@ -43,6 +45,7 @@ public class MemberController {
         member.setPhoneNumber(form.getPhoneNumber());
         member.setPosition(form.getPosition());
         member.setLoginStatus(Status.OUT);
+        member.setCreateTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         Department department = departmentService.findOne(form.getDepartmentName()).get();
         department.setNumberOfMember(department.getNumberOfMember() + 1);
         departmentService.save(department);

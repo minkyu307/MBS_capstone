@@ -145,6 +145,9 @@ ul, li {
 	color: black;
 	width: 40px;
 }
+ a:link { color: black; text-decoration: none;}
+ a:visited { color: black; text-decoration: none;}
+ a:hover { color: black; text-decoration: none;}
 </style>
     <title>MemoList</title>
 </head>
@@ -169,22 +172,24 @@ ul, li {
                 </li>
                 <!-- 게시물이 출력될 영역 -->
                 <li>
-                    <ul th:each="memo : ${memos}">
-                        <li th:text="${memo.id}">NULL</li>
-                        <li th:text="${memo.contents}">NULL</li>
+                    <ul th:each="memo, i: ${memos}">
+                        <li th:text="${i.count}">NULL</li>
+                        <li ><a th:text="${memo.contents}" th:href="@{/memo/readMemo(id=${memo.id})}">NULL</a></li>
                         <li th:text="${memo.createTime}">NULL</li>
                         <li th:text="${memo.lastModifiedTime}">NULL</li>
                         <li th:text="${memo.member.memberName}"></li>
                         <li>
                             <button class="btndel">
-                                <a style="text-decoration:none" th:href="@{/memo/delete(id=${memo.id})}">삭제</a>
+                                <a th:href="@{/memo/delete(id=${memo.id})}">삭제</a>
                             </button>
                         </li>
                     </ul>
                 </li>
             </ul> <!-- 게시판 페이징 영역 --> <!-- 검색 폼 영역 -->
             <div>
-                <input type="button"  class="btn_new" value="새 메모">
+                <button class="btn_new">
+                    <a th:href="@{/memo/newMemo}">새 메모</a>
+                </button>
             </div>
         </li>
     </div>

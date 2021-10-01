@@ -19,7 +19,7 @@ public class Member {
 
     private String login_id;
     private String password;
-    private LocalDateTime createTime;
+    private String createTime;
     private String memberName;
     private String address;
     private String email;

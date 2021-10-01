@@ -14,8 +14,8 @@ public class Board {
     @Id
     @GeneratedValue
     private Long id;
-    private LocalDateTime createTime;
-    private LocalDateTime lastModifiedTime;
+    private String createTime;
+    private String lastModifiedTime;
     private String contents;
 
     @ManyToOne

@@ -21,7 +21,7 @@ public class MemoService {
         this.memoRepository = memoRepository;
     }
 
-    public Long join(Memo memo) {
+    public Long save(Memo memo) {
         memoRepository.save(memo);
         return memo.getId();
     }
@@ -40,5 +40,9 @@ public class MemoService {
 
     public void deleteMemo(Long id){
         memoRepository.deleteMemo(id);
+    }
+
+    public void clearPersist() {
+        memoRepository.clearPersist();
     }
 }
