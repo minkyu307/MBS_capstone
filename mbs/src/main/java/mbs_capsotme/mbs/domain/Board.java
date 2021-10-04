@@ -17,6 +17,8 @@ public class Board {
     private String createTime;
     private String lastModifiedTime;
     private String contents;
+    private String title;
+    private int views;
 
     @ManyToOne
     @JoinColumn(name = "member_id")

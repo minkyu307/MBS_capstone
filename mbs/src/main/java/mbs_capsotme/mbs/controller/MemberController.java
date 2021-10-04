@@ -61,7 +61,7 @@ public class MemberController {
         HttpSession session = req.getSession();
         String loginId = memberForm.getLogin_id();
         String password = memberForm.getPassword();
-        Member member = new Member();
+        Member member;
 
         try {
             member = memberService.findByLoginId(loginId).get();

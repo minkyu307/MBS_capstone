@@ -39,4 +39,5 @@ public class DepartmentRepository {
         em.flush();
         em.clear();
     }
+
 }

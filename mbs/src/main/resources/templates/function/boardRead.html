@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title></title>
+</head>
+<style type="text/css">
+    *{ margin: 0; padding: 0; }
+
+    .board_wrap .header {  font-size: 25px;
+        padding: 10px;
+        background-color: lightpink;
+        color: white;
+        text-align: center;
+    }
+    table{
+        width: 100%;
+    }
+    table.table2{
+        border-collapse: separate;
+        border-spacing: 1px;
+        text-align: left;
+        line-height: 1.5;
+        border-top: 1px solid #ccc;
+        margin : 20px 10px;
+    }
+    table.table2 tr {
+        width: 50px;
+        padding: 10px;
+        font-weight: bold;
+        vertical-align: top;
+        border-bottom: 1px solid #ccc;
+    }
+    table.table2 td {
+
+        padding: 10px;
+        vertical-align: top;
+        border-bottom: 1px solid #ccc;
+    }
+    .btn{
+        background-color: lightpink;
+        border: 2px;
+        border-radius: 3px;
+        color: black;
+        width: 50px;
+        height: 30px;
+    }
+    a:link { color: black; text-decoration: none;}
+    a:visited { color: black; text-decoration: none;}
+    a:hover { color: black; text-decoration: none;}
+</style>
+<body>
+<td th:text="${session.member.memberName}"></td>님
+<button onclick="location.href='/members/logout'" style="background-color: rgb(240, 240, 255)">LogOut</button>
+<div class="board_wrap">
+    <div class="header">
+        BOARD READ
+    </div>
+    <form method = "get">
+        <table  style="padding-top:50px" align = center width=700 border=0 cellpadding=2 >
+
+            <tr>
+                <td bgcolor=white>
+                    <table class = "table2">
+                        <tr>
+                            <td width="150">제목</td>
+                            <td th:text="${board.title}">null</td>
+                        </tr>
+                        <tr>
+                            <td>작성일자</td>
+                            <td th:text="${board.createTime}">null</td>
+                        </tr>
+                        <tr>
+                            <td>조회수</td>
+                            <td th:text="${board.views}">null</td>
+                        </tr>
+
+                        <tr>
+                            <td>본문</td>
+                            <td th:text="${board.contents}">null</td>
+                        </tr>
+
+                        <tr>
+                            <td>파일첨부</td>
+                            <td></td>
+                        </tr>
+                    </table>
+
+                    <center>
+                        <input type="button" class="btn">
+                        <input type="button" class="btn">
+                    </center>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+</body>
+</html>

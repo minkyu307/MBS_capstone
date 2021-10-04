@@ -52,7 +52,7 @@ public class JpaDataTest {
         for (int i = 0; i < 5; i++) {
             Board board = new Board();
             board.setContents("A" + i);
-            boardService.join(board);
+            boardService.save(board);
         }
 
         for (int i = 0; i < 5; i++) {
@@ -91,7 +91,7 @@ public class JpaDataTest {
         System.out.println("findOndMemo = " + findOndMemo.get().getContents());
 
         //게시판 조회
-        List<Board> boards = boardService.findBoards();
+        List<Board> boards = boardService.findAllBoards();
         for (Board board : boards) {
             System.out.println("board.getId() = " + board.getId());
             System.out.println("board = " + board.getContents());
@@ -118,7 +118,7 @@ public class JpaDataTest {
         Board board = new Board();
         board.setContents("Hello");
         board.setMember(member);
-        boardService.join(board);
+        boardService.save(board);
 
         memberService.clearPersist();
         boardService.clearPersist();

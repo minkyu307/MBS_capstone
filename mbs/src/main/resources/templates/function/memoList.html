@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script
-            src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
     <style type="text/css">
 * {
 	margin: 0;
@@ -174,7 +173,7 @@ ul, li {
                 <li>
                     <ul th:each="memo, i: ${memos}">
                         <li th:text="${i.count}">NULL</li>
-                        <li ><a th:text="${memo.contents}" th:href="@{/memo/readMemo(id=${memo.id})}">NULL</a></li>
+                        <li><a th:text="${memo.contents}" th:href="@{/memo/readMemo(id=${memo.id})}">NULL</a></li>
                         <li th:text="${memo.createTime}">NULL</li>
                         <li th:text="${memo.lastModifiedTime}">NULL</li>
                         <li th:text="${memo.member.memberName}"></li>

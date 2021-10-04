@@ -20,12 +20,12 @@ public class BoardService {
         this.boardRepository = boardRepository;
     }
 
-    public Long join(Board board) {
+    public Long save(Board board) {
         boardRepository.save(board);
         return board.getId();
     }
 
-    public List<Board> findBoards() {
+    public List<Board> findAllBoards() {
         return boardRepository.findAll();
     }
 
