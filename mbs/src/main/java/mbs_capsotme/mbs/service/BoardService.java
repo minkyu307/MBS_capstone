@@ -33,6 +33,23 @@ public class BoardService {
         return boardRepository.findById(boardId);
     }
 
+    public void deleteBoard(Long id) {
+        boardRepository.deleteBoard(id);
+    }
+
+    public List<Board> searchBoard(int select, String search) {
+
+        if (select == 1) {
+            return boardRepository.searchBoardByTitleOrContents(search);
+        }
+        else if (select == 2) {
+            return boardRepository.searchBoardByTitle(search);
+        }
+        else{
+            return boardRepository.searchBoardByContents(search);
+        }
+    }
+
     public void clearPersist() {
         boardRepository.clearPersist();
     }

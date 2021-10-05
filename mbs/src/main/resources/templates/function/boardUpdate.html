@@ -31,7 +31,7 @@
         border-bottom: 1px solid #ccc;
     }
     table.table2 td {
-
+        width: 100px;
         padding: 10px;
         vertical-align: top;
         border-bottom: 1px solid #ccc;
@@ -41,7 +41,7 @@
         border: 2px;
         border-radius: 3px;
         color: black;
-        width: 50px;
+        width: 70px;
         height: 30px;
     }
     a:link { color: black; text-decoration: none;}
@@ -53,47 +53,31 @@
 <button onclick="location.href='/members/logout'" style="background-color: rgb(240, 240, 255)">LogOut</button>
 <div class="board_wrap">
     <div class="header">
-        BOARD READ
+        BOARD UPDATE
     </div>
-    <form method = "get">
+    <form method = "post" action = "/board/saveBoardUpdate">
         <table  style="padding-top:50px" align = center width=700 border=0 cellpadding=2 >
-
             <tr>
                 <td bgcolor=white>
                     <table class = "table2">
                         <tr>
-                            <td width="150">제목</td>
-                            <td th:text="${board.title}">null</td>
+                            <td>제목</td>
+                            <td><textarea name ="title" cols=55 rows=1
+                                          th:text="${board.title}"></textarea></td>
                         </tr>
                         <tr>
-                            <td>작성일</td>
-                            <td th:text="${board.createTime}">null</td>
-                        </tr>
-                        <tr>
-                            <td>최종수정일</td>
-                            <td th:text="${board.lastModifiedTime}">null</td>
-                        </tr>
-                        <tr>
-                            <td>조회수</td>
-                            <td th:text="${board.views}">null</td>
-                        </tr>
-
-                        <tr>
-                            <td>본문</td>
-                            <td th:text="${board.contents}">null</td>
-                        </tr>
+                            <td>내용</td>
+                            <td><textarea name ="contents" cols=55 rows=12
+                                          th:text="${board.contents}"></textarea></tr>
                         <tr>
                             <td>파일첨부</td>
                             <td></td>
                         </tr>
                     </table>
+
                     <center>
-                        <button class="btn">
-                            <a th:href="@{/board/update(id=${board.id})}">수정</a>
-                        </button>
-                        <button class="btn">
-                            <a th:href="@{/board/delete(id=${board.id})}">삭제</a>
-                        </button>
+                        <input type="hidden" name="id" th:value="${board.id}">
+                        <input class="btn" type = "submit" value="수정완료">
                     </center>
                 </td>
             </tr>

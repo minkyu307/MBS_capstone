@@ -7,6 +7,7 @@ import lombok.Setter;
 @Setter
 public class BoardForm {
 
+    private Long id;
     private String title;
     private String contents;
 }

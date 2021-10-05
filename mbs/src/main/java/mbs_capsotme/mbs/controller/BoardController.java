@@ -9,7 +9,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -56,13 +59,65 @@ public class BoardController {
     }
 
     @RequestMapping(value = "/board/boardRead")
-    public String readBoard(HttpServletRequest req, Model model){
+    public String readBoard(HttpServletRequest req, Model model) {
 
         Long id = Long.parseLong(req.getParameter("id"));
         Board board = boardService.findOne(id).get();
+        board.setViews(board.getViews() + 1);
+        boardService.save(board);
 
         model.addAttribute("board", board);
 
-        return "/function/boardRead";
+        return "function/boardRead";
+    }
+
+    @RequestMapping(value = "/board/update")
+    public String updateBoard(HttpServletRequest req, Model model) {
+
+        Long id = Long.parseLong(req.getParameter("id"));
+        Board board = boardService.findOne(id).get();
+        model.addAttribute("board", board);
+
+        return "function/boardUpdate";
+    }
+
+    @RequestMapping(value = "/board/saveBoardUpdate")
+    public String saveUpdate(HttpServletRequest req, Model model, BoardForm boardForm) {
+
+        Board board = boardService.findOne(boardForm.getId()).get();
+        board.setTitle(boardForm.getTitle());
+        board.setContents(boardForm.getContents());
+        board.setLastModifiedTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        boardService.save(board);
+
+        return "redirect:/board/boardList";
+    }
+
+    @RequestMapping(value = "/board/delete")
+    public String deleteBoard(HttpServletRequest req) {
+
+        Long id = Long.parseLong(req.getParameter("id"));
+        boardService.deleteBoard(id);
+
+        return "redirect:/board/boardList";
+    }
+
+    @RequestMapping(value = "/board/searchBoard")
+    public String searchBoard(HttpServletRequest req, Model model, HttpServletResponse response) throws IOException {
+
+        int select = Integer.parseInt(req.getParameter("select"));
+        String search = req.getParameter("search");
+
+        List<Board> boards = boardService.searchBoard(select, search);
+        if(!boards.isEmpty()){
+            model.addAttribute("boards", boards);
+            return "function/boardList";
+        }
+
+        response.setContentType("text/html; charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        out.println("<script>alert('찾으시는 글이 없습니다.'); location.href='/board/boardList';</script>");
+        out.flush();
+        return "redirect:/board/boardList";
     }
 }

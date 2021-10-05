@@ -30,6 +30,28 @@ public class BoardRepository {
         return em.createQuery("select b from Board b", Board.class).getResultList();
     }
 
+    public void deleteBoard(Long id) {
+        em.createQuery("delete from Board b where b.id=:bid").setParameter("bid",id).executeUpdate();
+    }
+
+    public List<Board> searchBoardByTitleOrContents(String search) {
+        search = "%"+search+"%";
+        return em.createQuery("select b from Board b where b.title like ?1 or b.contents like ?1")
+                .setParameter(1,search).getResultList();
+    }
+
+    public List<Board> searchBoardByTitle(String search) {
+        search = "%"+search+"%";
+        return em.createQuery("select b from Board b where b.title like ?1")
+                .setParameter(1,search).getResultList();
+    }
+
+    public List<Board> searchBoardByContents(String search) {
+        search = "%"+search+"%";
+        return em.createQuery("select b from Board b where b.contents like ?1")
+                .setParameter(1,search).getResultList();
+    }
+
     public void clearPersist() {
         em.flush();
         em.clear();
