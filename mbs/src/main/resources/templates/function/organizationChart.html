@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style type="text/css">
+        *{ margin: 0; padding: 0; }
+        .board_wrap .header {  font-size: 25px;
+            padding: 10px;
+            background-color: lightgoldenrodyellow;
+            color: lightslategray;
+            text-align: center;
+        }
+        table.type07 {
+            border-collapse: collapse;
+            text-align: center;
+            line-height: 1;
+            border: 3px solid #ccc;
+            margin-top: 20px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        table.type07 thead {
+            border : 1px solid #ccc;
+            background: lightgoldenrodyellow;
+        }
+        table.type07 thead th {
+            border : 1px solid #ccc;
+            padding: 5px;
+            font-weight: bold;
+            vertical-align: center;
+            color: lightslategray;
+        }
+        table.type07 tbody th {
+            width: 70px;
+            padding: 5px;
+            font-weight: bold;
+            vertical-align: center;
+            border: 1px solid #ccc;
+            background: #fcf1f4;
+        }
+        table.type07 td {
+            width: 100px;
+            padding: 5px;
+            vertical-align: center;
+            border: 1px solid #ccc;
+        }
+        a:link { color: black; text-decoration: none;}
+        a:visited { color: black; text-decoration: none;}
+        a:hover { color: black; text-decoration: none;}
+    </style>
+    <title>Insert title here</title>
+</head>
+<body>
+<td th:text="${session.member.memberName}"></td>님
+<button onclick="location.href='/members/logout'" style="background-color: rgb(240, 240, 255)">LogOut</button>
+<div class="board_wrap">
+    <div class="header">
+        ORGANIZATION CHART
+    </div>
+
+    <table class="type07" th:each="department: ${departments}">
+        <thead>
+        <tr>
+            <th scope="cols" th:text="${department.departmentName}">null</th>
+            <th scope="cols" colspan="4">회원정보</th>
+        </tr>
+        </thead>
+        <tbody th:each="member: ${department.getMembers()}">
+        <tr>
+            <th scope="row" th:text="${member.getMemberName()}"></th>
+            <td th:text="${member.getEmail()}">email</td>
+            <td>
+                <a th:if="${member.getLoginStatus().toString().equals('IN')}" th:href="@{/}" th:text="${member.getLoginStatus()}"></a>
+                <a th:if="${member.getLoginStatus().toString().equals('OUT')}" th:text="${member.getLoginStatus()}"></a>
+            </td>
+            <td th:text="${member.getPhoneNumber()}">call</td>
+            <td th:text="${member.getPosition()}">position</td>
+        </tr>
+        </tbody>
+    </table>
+
+
+</div>
+</body>
+</html>
