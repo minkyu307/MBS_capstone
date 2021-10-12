@@ -71,7 +71,7 @@
             <th scope="row" th:text="${member.getMemberName()}"></th>
             <td th:text="${member.getEmail()}">email</td>
             <td>
-                <a th:if="${member.getLoginStatus().toString().equals('IN')}" th:href="@{/}" th:text="${member.getLoginStatus()}"></a>
+                <a th:if="${member.getLoginStatus().toString().equals('IN')}" th:href="@{/chat/goChat}" th:text="${member.getLoginStatus()}"></a>
                 <a th:if="${member.getLoginStatus().toString().equals('OUT')}" th:text="${member.getLoginStatus()}"></a>
             </td>
             <td th:text="${member.getPhoneNumber()}">call</td>
