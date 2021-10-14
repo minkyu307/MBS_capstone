@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -77,6 +78,7 @@ public class MemberController {
 
         member.setLoginStatus(Status.IN);
         session.setAttribute("member",member);
+        member.setSessionId(session.getId());
         memberService.joinAndSave(member);
 
         memberForm.setMemberName(member.getMemberName());
@@ -91,8 +93,10 @@ public class MemberController {
         Member member = (Member) session.getAttribute("member");
         Member newMember = memberService.findOne(member.getId()).get();
         newMember.setLoginStatus(Status.OUT);
+        newMember.setSessionId(null);
         memberService.joinAndSave(newMember);
         session.invalidate();
+
         return "redirect:/";
     }
 }

@@ -1,6 +1,7 @@
 package mbs_capsotme.mbs.handler;
 
 import lombok.extern.log4j.Log4j2;
+import mbs_capsotme.mbs.service.MemberService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -15,6 +16,11 @@ import java.util.List;
 public class ChatHandler extends TextWebSocketHandler {
 
     private static List<WebSocketSession> list = new ArrayList<>();
+    private final MemberService memberService;
+
+    public ChatHandler(MemberService memberService) {
+        this.memberService = memberService;
+    }
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {

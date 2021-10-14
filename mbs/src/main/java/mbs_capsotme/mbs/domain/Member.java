@@ -23,6 +23,7 @@ public class Member {
     private String memberName;
     private String address;
     private String email;
+    private String sessionId;
 
     @Enumerated(EnumType.STRING)
     private Status loginStatus;

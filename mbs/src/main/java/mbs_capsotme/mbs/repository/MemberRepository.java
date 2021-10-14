@@ -37,6 +37,17 @@ public class MemberRepository {
                 "select m from Member m where login_id = '"+loginId+"'", Member.class).getSingleResult());
     }
 
+    /*public void addSessionIdById(String id, String sessionId) {
+        em.createNativeQuery("insert into member(sessionId) values(?) where member.id=?")
+                .setParameter(1, sessionId).setParameter(2, id).executeUpdate();
+    }
+
+    public void deleteSessionIdById(String id){
+        em.createNativeQuery("insert into member(sessionId) values(null) where member.id=?")
+                .setParameter(1, id).executeUpdate();
+    }*/
+
+
     public void clearPersist() {
         em.flush();
         em.clear();

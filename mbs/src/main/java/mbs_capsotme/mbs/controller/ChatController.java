@@ -2,6 +2,7 @@ package mbs_capsotme.mbs.controller;
 
 import lombok.extern.log4j.Log4j2;
 import mbs_capsotme.mbs.domain.Member;
+import mbs_capsotme.mbs.domain.Status;
 import mbs_capsotme.mbs.service.MemberService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +25,13 @@ public class ChatController {
     @RequestMapping(value = "/chat/goChat")
     public String doChatWithMember(HttpServletRequest req, Model model) {
 
+        List<Member> members = memberService.findMembers();
+        int cnt=0;
+        for (Member member : members) {
+            if(member.getLoginStatus().equals(Status.IN))
+                cnt++;
+        }
+        model.addAttribute("cnt", cnt);
 
         return "function/doChat";
     }

@@ -38,6 +38,14 @@ public class MemberService {
         return memberRepository.findByLoginId(loginId);
     }
 
+    /*public void addWebSocketSessionIdById(String id, String sessionId){
+        memberRepository.addSessionIdById(id,sessionId);
+    }
+
+    public void deleteWebSocketSessionIdById(String id) {
+        memberRepository.deleteSessionIdById(id);
+    }*/
+
     public void clearPersist() {
         memberRepository.clearPersist();
     }
