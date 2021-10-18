@@ -33,7 +33,12 @@ public class MemoController {
         Member member = (Member) session.getAttribute("member");
         List<Memo> memos = memoService.findAllByMember(member);
         model.addAttribute("memos", memos);
-        return "function/memoList";
+
+        int div =  Integer.parseInt(req.getParameter("division"));
+        if (div==1)
+            return "divFunction/memoListDiv";
+        else
+            return "function/memoList";
     }
 
     @RequestMapping(value = "/memo/delete")
@@ -41,12 +46,22 @@ public class MemoController {
 
         Long id = Long.parseLong(req.getParameter("id"));
         memoService.deleteMemo(id);
-        return "redirect:/memo/memoList";
+
+        int div =  Integer.parseInt(req.getParameter("division"));
+        if (div==1)
+            return "redirect:/memo/memoList?division=1";
+        else
+            return "redirect:/memo/memoList?division=0";
     }
 
     @RequestMapping(value = "/memo/newMemo")
-    public String createNewMemo() {
-        return "function/createNewMemo";
+    public String createNewMemo(HttpServletRequest req) {
+
+        int div =  Integer.parseInt(req.getParameter("division"));
+        if (div==1)
+            return "divFunction/createNewMemoDiv";
+        else
+            return "function/createNewMemo";
     }
 
     @RequestMapping(value = "/memo/saveNewMemo")
@@ -63,7 +78,11 @@ public class MemoController {
         memo.setMember(member);
         memoService.save(memo);
 
-        return "redirect:/memo/memoList";
+        int div =  Integer.parseInt(req.getParameter("division"));
+        if (div==1)
+            return "redirect:/memo/memoList?division=1";
+        else
+            return "redirect:/memo/memoList?division=0";
     }
 
     @RequestMapping(value = "/memo/readMemo")
@@ -74,7 +93,11 @@ public class MemoController {
 
         model.addAttribute("memo", memo);
 
-        return "function/readMemo";
+        int div =  Integer.parseInt(req.getParameter("division"));
+        if (div==1)
+            return "divFunction/readMemoDiv";
+        else
+            return "function/readMemo";
     }
 
     @RequestMapping(value = "/memo/updateMemo")
@@ -87,7 +110,11 @@ public class MemoController {
         memo.setContents(contents);
         memoService.clearPersist();
 
-        return "redirect:/memo/memoList";
+        int div =  Integer.parseInt(req.getParameter("division"));
+        if (div==1)
+            return "redirect:/memo/memoList?division=1";
+        else
+            return "redirect:/memo/memoList?division=0";
     }
 
 

@@ -141,9 +141,7 @@
 </style>
 
 <body>
-<td th:text="${session.member.memberName}"></td>님
-<button onclick="location.href='/members/logout'" style="background-color: rgb(240, 240, 255)">LogOut</button>
-<button onclick="location.href='/division/notDivision'" style="background-color: rgb(240, 240, 255)">Main</button>
+<button onclick="location.href='/division/divSelect'" style="background-color: rgb(240, 240, 255)">Main</button>
 <div class="board_wrap">
     <div class="header">BOARD</div>
     <div id="mainWrapper">
@@ -163,7 +161,7 @@
                 <li>
                     <ul th:each="board, i: ${boards}">
                         <li th:text="${i.count}">null</li>
-                        <li><a th:text="${board.title}" th:href="@{/board/boardRead(id=${board.id},division=0)}">NULL</a></li>
+                        <li><a th:text="${board.title}" th:href="@{/board/boardRead(id=${board.id},division=1)}">NULL</a></li>
                         <li th:text="${board.createTime}">null</li>
                         <li th:text="${board.member.getMemberName()}">null</li>
                         <li th:text="${board.views}">null</li>
@@ -194,11 +192,11 @@
                         <option value='3'>내용</option>
                     </select>
                     <input id='txtKeyWord' name="search" />
-                    <input type="hidden" name="division" th:value="0">
+                    <input type="hidden" name="division" th:value="1">
                     <input class="btn_srch" type="submit" value="검색"/>
                 </form>
                 <button class="btn_new">
-                    <a th:href="@{/board/newBoard(division=0)}">새글쓰기</a>
+                    <a th:href="@{/board/newBoard(division=1)}">새글쓰기</a>
                 </button>
             </div>
         </li>

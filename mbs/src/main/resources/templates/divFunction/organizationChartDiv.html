@@ -52,9 +52,7 @@
     <title>Insert title here</title>
 </head>
 <body>
-<td th:text="${session.member.memberName}"></td>님
-<button onclick="location.href='/members/logout'" style="background-color: rgb(240, 240, 255)">LogOut</button>
-<button onclick="location.href='/division/notDivision'" style="background-color: rgb(240, 240, 255)">Main</button>
+<button onclick="location.href='/division/divSelect'" style="background-color: rgb(240, 240, 255)">Main</button>
 <div class="board_wrap">
     <div class="header">
         ORGANIZATION CHART
@@ -72,7 +70,7 @@
             <th scope="row" th:text="${member.getMemberName()}"></th>
             <td th:text="${member.getEmail()}">email</td>
             <td>
-                <a th:if="${member.getLoginStatus().toString().equals('IN')}" th:href="@{/chat/goChat(division=0)}" th:text="${member.getLoginStatus()}"></a>
+                <a th:if="${member.getLoginStatus().toString().equals('IN')}" th:href="@{/chat/goChat(division=1)}" th:text="${member.getLoginStatus()}"></a>
                 <a th:if="${member.getLoginStatus().toString().equals('OUT')}" th:text="${member.getLoginStatus()}"></a>
             </td>
             <td th:text="${member.getPhoneNumber()}">call</td>

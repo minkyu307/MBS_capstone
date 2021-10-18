@@ -5,6 +5,13 @@
     <title>Title</title>
 </head>
 <body>
-
+<div style="padding-bottom: 3px">
+    <td th:text="${session.member.memberName}" align="left"></td>님
+    <button onclick="location.href='/members/logout'" style="background-color: rgb(240, 240, 255)" align="left">LogOut</button>
+</div>
+<iframe src="/division/divSelect" style="display:inline-block; width:49.02vw; height: 96vh; border: 1px solid gray;" align="left" frameborder="0"
+        framespacing="0"></iframe>
+<iframe src="/division/divSelect" style="display:inline-block; width:49.02vw; height: 96vh;  border: 1px solid gray; " align="right" frameborder="0"
+        framespacing="0"></iframe>
 </body>
 </html>

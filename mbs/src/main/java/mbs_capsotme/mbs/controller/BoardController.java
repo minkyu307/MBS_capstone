@@ -27,17 +27,26 @@ public class BoardController {
     }
 
     @RequestMapping(value = "/board/boardList")
-    public String showBoardList(Model model) {
+    public String showBoardList(Model model, HttpServletRequest req) {
 
         List<Board> boards = boardService.findAllBoards();
         model.addAttribute("boards", boards);
 
-        return "function/boardList";
+        int div =  Integer.parseInt(req.getParameter("division"));
+        if (div==1)
+            return "divFunction/boardListDiv";
+        else
+            return "function/boardList";
     }
 
     @RequestMapping(value = "/board/newBoard")
-    public String createNewBoard() {
-        return "function/newBoard";
+    public String createNewBoard(HttpServletRequest req) {
+
+        int div =  Integer.parseInt(req.getParameter("division"));
+        if (div==1)
+            return "divFunction/newBoardDiv";
+        else
+            return "function/newBoard";
     }
 
     @RequestMapping(value = "/board/saveNewBoard")
@@ -55,7 +64,11 @@ public class BoardController {
         board.setViews(0);
         boardService.save(board);
 
-        return "redirect:/board/boardList";
+        int div =  Integer.parseInt(req.getParameter("division"));
+        if (div==1)
+            return "redirect:/board/boardList?division=1";
+        else
+            return "redirect:/board/boardList?division=0";
     }
 
     @RequestMapping(value = "/board/boardRead")
@@ -68,7 +81,11 @@ public class BoardController {
 
         model.addAttribute("board", board);
 
-        return "function/boardRead";
+        int div =  Integer.parseInt(req.getParameter("division"));
+        if (div==1)
+            return "divFunction/boardReadDiv";
+        else
+            return "function/boardRead";
     }
 
     @RequestMapping(value = "/board/update")
@@ -78,7 +95,11 @@ public class BoardController {
         Board board = boardService.findOne(id).get();
         model.addAttribute("board", board);
 
-        return "function/boardUpdate";
+        int div =  Integer.parseInt(req.getParameter("division"));
+        if (div==1)
+            return "divFunction/boardUpdateDiv";
+        else
+            return "function/boardUpdate";
     }
 
     @RequestMapping(value = "/board/saveBoardUpdate")
@@ -90,7 +111,11 @@ public class BoardController {
         board.setLastModifiedTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         boardService.save(board);
 
-        return "redirect:/board/boardList";
+        int div =  Integer.parseInt(req.getParameter("division"));
+        if (div==1)
+            return "redirect:/board/boardList?division=1";
+        else
+            return "redirect:/board/boardList?division=0";
     }
 
     @RequestMapping(value = "/board/delete")
@@ -99,25 +124,37 @@ public class BoardController {
         Long id = Long.parseLong(req.getParameter("id"));
         boardService.deleteBoard(id);
 
-        return "redirect:/board/boardList";
+        int div =  Integer.parseInt(req.getParameter("division"));
+        if (div==1)
+            return "redirect:/board/boardList?division=1";
+        else
+            return "redirect:/board/boardList?division=0";
     }
 
     @RequestMapping(value = "/board/searchBoard")
     public String searchBoard(HttpServletRequest req, Model model, HttpServletResponse response) throws IOException {
 
         int select = Integer.parseInt(req.getParameter("select"));
+        int div =  Integer.parseInt(req.getParameter("division"));
         String search = req.getParameter("search");
 
         List<Board> boards = boardService.searchBoard(select, search);
         if(!boards.isEmpty()){
             model.addAttribute("boards", boards);
-            return "function/boardList";
+
+            if (div==1)
+                return "divFunction/boardListDiv";
+            else
+                return "function/boardList";
         }
 
         response.setContentType("text/html; charset=UTF-8");
         PrintWriter out = response.getWriter();
         out.println("<script>alert('찾으시는 글이 없습니다.'); location.href='/board/boardList';</script>");
         out.flush();
-        return "redirect:/board/boardList";
+        if (div==1)
+            return "redirect:/board/boardList?division=1";
+        else
+            return "redirect:/board/boardList?division=0";
     }
 }

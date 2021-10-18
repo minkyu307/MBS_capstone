@@ -51,6 +51,7 @@
 <body>
 <td th:text="${session.member.memberName}"></td>님
 <button onclick="location.href='/members/logout'" style="background-color: rgb(240, 240, 255)">LogOut</button>
+<button onclick="location.href='/division/notDivision'" style="background-color: rgb(240, 240, 255)">Main</button>
 <div class="board_wrap">
     <div class="header">
         BOARD UPDATE
@@ -74,7 +75,7 @@
                             <td></td>
                         </tr>
                     </table>
-
+                    <input type="hidden" name="division" th:value="0">
                     <center>
                         <input type="hidden" name="id" th:value="${board.id}">
                         <input class="btn" type = "submit" value="수정완료">

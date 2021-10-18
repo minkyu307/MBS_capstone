@@ -21,9 +21,7 @@
 </style>
 
 <body>
-<td th:text="${session.member.memberName}"></td>님
-<button onclick="location.href='/members/logout'" style="background-color: rgb(240, 240, 255)">LogOut</button>
-<button onclick="location.href='/division/notDivision'" style="background-color: rgb(240, 240, 255)">Main</button>
+<button onclick="location.href='/division/divSelect'" style="background-color: rgb(240, 240, 255)">Main</button>
 <div class="chat_wrap">
   <div class="header">
     CHAT LIST
@@ -39,7 +37,7 @@
     </tr>
     <tr th:each="member: ${members}">
       <td>
-        <a th:if="${member.getLoginStatus().toString().equals('IN')}" th:href="@{/chat/goChat(id=${member.getId()},division=0)}" th:text="${member.getMemberName()}"></a>
+        <a th:if="${member.getLoginStatus().toString().equals('IN')}" th:href="@{/chat/goChat(id=${member.getId()},division=1)}" th:text="${member.getMemberName()}"></a>
         <a th:if="${member.getLoginStatus().toString().equals('OUT')}" th:text="${member.getMemberName()}"></a>
       </td>
       <td th:text="${member.getLoginStatus()}"></td>

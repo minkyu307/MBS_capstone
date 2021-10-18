@@ -42,14 +42,12 @@
     }
 
 </style>
-<td th:text="${session.member.memberName}"></td>님
-<button onclick="location.href='/members/logout'" style="background-color: rgb(240, 240, 255)">LogOut</button>
-<button onclick="location.href='/division/notDivision'" style="background-color: rgb(240, 240, 255)">Main</button>
+<button onclick="location.href='/division/divSelect'" style="background-color: rgb(240, 240, 255)">Main</button>
 <body>
 <div class="chat_wrap" id="chatscrl">
     <div class="header">
         CHAT
-        <a th:text="${cnt}+'명'" th:href="@{/organization/showOrganizationChart(division=0)}"></a>
+        <a th:text="${cnt}+'명'" th:href="@{/organization/showOrganizationChart(division=1)}"></a>
     </div>
     <div class="chat" >
         <ul>

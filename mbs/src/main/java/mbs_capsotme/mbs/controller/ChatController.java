@@ -33,7 +33,11 @@ public class ChatController {
         }
         model.addAttribute("cnt", cnt);
 
-        return "function/doChat";
+        int div =  Integer.parseInt(req.getParameter("division"));
+        if (div==1)
+            return "divFunction/doChatDiv";
+        else
+            return "function/doChat";
     }
 
     @RequestMapping(value = "/chat")

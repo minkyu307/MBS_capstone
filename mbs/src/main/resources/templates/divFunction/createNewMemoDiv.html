@@ -51,9 +51,7 @@
     <title>Insert title here</title>
 </head>
 <body>
-<td th:text="${session.member.memberName}"></td>님
-<button onclick="location.href='/members/logout'" style="background-color: rgb(240, 240, 255)">LogOut</button>
-<button onclick="location.href='/division/notDivision'" style="background-color: rgb(240, 240, 255)">Main</button>
+<button onclick="location.href='/division/divSelect'" style="background-color: rgb(240, 240, 255)">Main</button>
 <div class="board_wrap">
     <div class="header">
         NEW MEMO
@@ -65,7 +63,7 @@
                     <table class = "table2">
                         <td><textarea name = "contents" style="width: 97%; height: 300px;"></textarea></td>
                     </table>
-                    <input type="hidden" name="division" th:value="0">
+                    <input type="hidden" name="division" th:value="1">
                     <center>
                         <button class="btn" type="submit">
                             <a >저장</a>

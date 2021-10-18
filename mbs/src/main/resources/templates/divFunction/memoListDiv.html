@@ -152,9 +152,7 @@ ul, li {
 </head>
 
 <body>
-<td th:text="${session.member.memberName}"></td>님
-<button onclick="location.href='/members/logout'" style="background-color: rgb(240, 240, 255)">LogOut</button>
-<button onclick="location.href='/division/notDivision'" style="background-color: rgb(240, 240, 255)">Main</button>
+<button onclick="location.href='/division/divSelect'" style="background-color: rgb(240, 240, 255)">Main</button>
 <div class="board_wrap">
     <div class="header">MEMOLIST</div>
     <div id="mainWrapper">
@@ -174,13 +172,13 @@ ul, li {
                 <li>
                     <ul th:each="memo, i: ${memos}">
                         <li th:text="${i.count}">NULL</li>
-                        <li><a th:text="${memo.contents}" th:href="@{/memo/readMemo(id=${memo.id},division=0)}">NULL</a></li>
+                        <li><a th:text="${memo.contents}" th:href="@{/memo/readMemo(id=${memo.id},division=1)}">NULL</a></li>
                         <li th:text="${memo.createTime}">NULL</li>
                         <li th:text="${memo.lastModifiedTime}">NULL</li>
                         <li th:text="${memo.member.memberName}"></li>
                         <li>
                             <button class="btndel">
-                                <a th:href="@{/memo/delete(id=${memo.id},division=0)}">삭제</a>
+                                <a th:href="@{/memo/delete(id=${memo.id},division=1)}">삭제</a>
                             </button>
                         </li>
                     </ul>
@@ -188,7 +186,7 @@ ul, li {
             </ul> <!-- 게시판 페이징 영역 --> <!-- 검색 폼 영역 -->
             <div>
                 <button class="btn_new">
-                    <a th:href="@{/memo/newMemo(division=0)}">새 메모</a>
+                    <a th:href="@{/memo/newMemo(division=1)}">새 메모</a>
                 </button>
             </div>
         </li>

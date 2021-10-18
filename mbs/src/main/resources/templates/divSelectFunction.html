@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>NotDiv</title></head>
+<style type="text/css">
+
+    div.button{
+        margin-left: 44%;
+        margin-top: 300px;
+    }
+    div.button input
+    {
+
+        padding: 5px;
+
+        width:200px;
+
+        font-size: 18px;
+        background-color: rgb(240, 240, 255);
+        border: 2px;
+        border-radius: 3px;
+        color: black;
+        font-size: 22px;
+        font-weight: 600;
+    }
+
+</style>
+<body style="background-color: rgb(255, 255, 255);">
+<div class="button">
+
+    <input type="button" onclick="location.href='/chat/goChat?division=1'" value="채팅"/><br/><br/>
+    <input type="button" onclick="location.href='/memo/memoList?division=1'" value="메모장"/><br/><br>
+    <input type="button" onclick="location.href='/board/boardList?division=1'" value="게시판"/><br><br>
+    <input type="button" onclick="location.href='/organization/showOrganizationChart?division=1'" value="조직도"/><br/>
+
+</div>
+<script type="text/javascript">
+
+</script>
+</body>
+</html>

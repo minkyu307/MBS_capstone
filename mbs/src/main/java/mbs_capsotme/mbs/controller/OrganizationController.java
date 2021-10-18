@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -21,12 +22,16 @@ public class OrganizationController {
 
 
     @RequestMapping(value = "/organization/showOrganizationChart")
-    public String showOrganizationChart(Model model){
+    public String showOrganizationChart(Model model, HttpServletRequest req){
 
         List<Department> departments = departmentService.findDepartments();
         model.addAttribute("departments", departments);
 
-        return "function/organizationChart";
+        int div =  Integer.parseInt(req.getParameter("division"));
+        if (div==1)
+            return "divFunction/organizationChartDiv";
+        else
+            return "function/organizationChart";
     }
 
 }
