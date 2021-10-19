@@ -1,5 +1,6 @@
 package mbs_capsotme.mbs.controller;
 
+import lombok.extern.log4j.Log4j2;
 import mbs_capsotme.mbs.domain.Board;
 import mbs_capsotme.mbs.domain.Member;
 import mbs_capsotme.mbs.domain.Memo;
@@ -7,10 +8,14 @@ import mbs_capsotme.mbs.service.BoardService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.swing.filechooser.FileSystemView;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
@@ -18,6 +23,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
+@Log4j2
 public class BoardController {
 
     private final BoardService boardService;
@@ -32,8 +38,8 @@ public class BoardController {
         List<Board> boards = boardService.findAllBoards();
         model.addAttribute("boards", boards);
 
-        int div =  Integer.parseInt(req.getParameter("division"));
-        if (div==1)
+        int div = Integer.parseInt(req.getParameter("division"));
+        if (div == 1)
             return "divFunction/boardListDiv";
         else
             return "function/boardList";
@@ -42,8 +48,8 @@ public class BoardController {
     @RequestMapping(value = "/board/newBoard")
     public String createNewBoard(HttpServletRequest req) {
 
-        int div =  Integer.parseInt(req.getParameter("division"));
-        if (div==1)
+        int div = Integer.parseInt(req.getParameter("division"));
+        if (div == 1)
             return "divFunction/newBoardDiv";
         else
             return "function/newBoard";
@@ -64,8 +70,8 @@ public class BoardController {
         board.setViews(0);
         boardService.save(board);
 
-        int div =  Integer.parseInt(req.getParameter("division"));
-        if (div==1)
+        int div = Integer.parseInt(req.getParameter("division"));
+        if (div == 1)
             return "redirect:/board/boardList?division=1";
         else
             return "redirect:/board/boardList?division=0";
@@ -81,8 +87,8 @@ public class BoardController {
 
         model.addAttribute("board", board);
 
-        int div =  Integer.parseInt(req.getParameter("division"));
-        if (div==1)
+        int div = Integer.parseInt(req.getParameter("division"));
+        if (div == 1)
             return "divFunction/boardReadDiv";
         else
             return "function/boardRead";
@@ -95,8 +101,8 @@ public class BoardController {
         Board board = boardService.findOne(id).get();
         model.addAttribute("board", board);
 
-        int div =  Integer.parseInt(req.getParameter("division"));
-        if (div==1)
+        int div = Integer.parseInt(req.getParameter("division"));
+        if (div == 1)
             return "divFunction/boardUpdateDiv";
         else
             return "function/boardUpdate";
@@ -111,8 +117,8 @@ public class BoardController {
         board.setLastModifiedTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         boardService.save(board);
 
-        int div =  Integer.parseInt(req.getParameter("division"));
-        if (div==1)
+        int div = Integer.parseInt(req.getParameter("division"));
+        if (div == 1)
             return "redirect:/board/boardList?division=1";
         else
             return "redirect:/board/boardList?division=0";
@@ -124,8 +130,8 @@ public class BoardController {
         Long id = Long.parseLong(req.getParameter("id"));
         boardService.deleteBoard(id);
 
-        int div =  Integer.parseInt(req.getParameter("division"));
-        if (div==1)
+        int div = Integer.parseInt(req.getParameter("division"));
+        if (div == 1)
             return "redirect:/board/boardList?division=1";
         else
             return "redirect:/board/boardList?division=0";
@@ -135,14 +141,14 @@ public class BoardController {
     public String searchBoard(HttpServletRequest req, Model model, HttpServletResponse response) throws IOException {
 
         int select = Integer.parseInt(req.getParameter("select"));
-        int div =  Integer.parseInt(req.getParameter("division"));
+        int div = Integer.parseInt(req.getParameter("division"));
         String search = req.getParameter("search");
 
         List<Board> boards = boardService.searchBoard(select, search);
-        if(!boards.isEmpty()){
+        if (!boards.isEmpty()) {
             model.addAttribute("boards", boards);
 
-            if (div==1)
+            if (div == 1)
                 return "divFunction/boardListDiv";
             else
                 return "function/boardList";
@@ -152,9 +158,23 @@ public class BoardController {
         PrintWriter out = response.getWriter();
         out.println("<script>alert('찾으시는 글이 없습니다.'); location.href='/board/boardList';</script>");
         out.flush();
-        if (div==1)
+        if (div == 1)
             return "redirect:/board/boardList?division=1";
         else
             return "redirect:/board/boardList?division=0";
+    }
+
+    @RequestMapping(value = "/board/fileUpload")
+    public String fileUpload(HttpServletRequest req, @RequestParam("files")List<MultipartFile> files) throws Exception{
+
+        String basePath = "C:\\Users\\김민규\\Desktop\\MBS_capstone\\mbs\\src\\main\\resources\\files";
+
+        for(MultipartFile file : files) {
+            String originalName = file.getOriginalFilename();
+            String filePath = basePath + "/" + originalName;
+            File dest = new File(filePath);
+            file.transferTo(dest);
+        }
+        return "redirect:/board/boardRead?division=0&id="+req.getParameter("id");
     }
 }
