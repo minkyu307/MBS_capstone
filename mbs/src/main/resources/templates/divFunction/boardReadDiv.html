@@ -44,9 +44,26 @@
         width: 50px;
         height: 30px;
     }
-    a:link { color: black; text-decoration: none;}
-    a:visited { color: black; text-decoration: none;}
-    a:hover { color: black; text-decoration: none;}
+    .linkA:link{
+        color: black; text-decoration: none;
+    }
+    .linkA:visited{
+        color: black; text-decoration: none;
+    }
+    .linkA:hover{
+        color: black; text-decoration: none;
+    }
+    .fileInput{
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip:rect(0,0,0,0);
+        border: 0;
+    }
+
 </style>
 <body>
 <button onclick="location.href='/division/divSelect'" style="background-color: rgb(240, 240, 255)">Main</button>
@@ -54,50 +71,63 @@
     <div class="header">
         BOARD READ
     </div>
-    <form method = "get">
-        <table  style="padding-top:50px" align = center width=700 border=0 cellpadding=2 >
 
-            <tr>
-                <td bgcolor=white>
-                    <table class = "table2">
-                        <tr>
-                            <td width="150">제목</td>
-                            <td th:text="${board.title}">null</td>
-                        </tr>
-                        <tr>
-                            <td>작성일</td>
-                            <td th:text="${board.createTime}">null</td>
-                        </tr>
-                        <tr>
-                            <td>최종수정일</td>
-                            <td th:text="${board.lastModifiedTime}">null</td>
-                        </tr>
-                        <tr>
-                            <td>조회수</td>
-                            <td th:text="${board.views}">null</td>
-                        </tr>
+    <table  style="padding-top:50px" align = center width=700 border=0 cellpadding=2 >
 
-                        <tr>
-                            <td>본문</td>
-                            <td th:text="${board.contents}">null</td>
-                        </tr>
-                        <tr>
-                            <td>파일첨부</td>
-                            <td></td>
-                        </tr>
-                    </table>
-                    <center>
-                        <button class="btn">
-                            <a th:href="@{/board/update(id=${board.id},division=1)}">수정</a>
-                        </button>
-                        <button class="btn">
-                            <a th:href="@{/board/delete(id=${board.id},division=1)}">삭제</a>
-                        </button>
-                    </center>
-                </td>
-            </tr>
-        </table>
-    </form>
+        <tr>
+            <td bgcolor=white>
+                <table class = "table2">
+                    <tr>
+                        <td width="150">제목</td>
+                        <td th:text="${board.title}">null</td>
+                    </tr>
+                    <tr>
+                        <td>작성일</td>
+                        <td th:text="${board.createTime}">null</td>
+                    </tr>
+                    <tr>
+                        <td>최종수정일</td>
+                        <td th:text="${board.lastModifiedTime}">null</td>
+                    </tr>
+                    <tr>
+                        <td>조회수</td>
+                        <td th:text="${board.views}">null</td>
+                    </tr>
+
+                    <tr>
+                        <td>본문</td>
+                        <td th:text="${board.contents}">null</td>
+                    </tr>
+                    <tr>
+                        <td>파일첨부</td>
+
+                        <td>
+                            <form name="fileUpload_form" method="post" action="/board/fileUpload" enctype="multipart/form-data">
+                                <input type="hidden" name="division" th:value="1">
+                                <input type="hidden" name="id" th:value="${board.id}">
+                                <input multiple type="file" name="files">
+                                <input class="btn" type="submit" value="업로드">
+                            </form>
+                            <ul th:if="${board.getUploadFiles() != null}" th:each="file :${board.getUploadFiles()}">
+                                <li><span th:text="${file.fileName}"></span>
+                                    <a href="#" th:href="@{/board/fileDownLoad(uuid=${file.getUuid()},fileName=${file.getFileName()})}">
+                                        download</a></li>
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
+                <center>
+                    <button class="btn">
+                        <a class="linkA" th:href="@{/board/update(id=${board.id},division=1)}">수정</a>
+                    </button>
+                    <button class="btn">
+                        <a class="linkA" th:href="@{/board/delete(id=${board.id},division=1)}">삭제</a>
+                    </button>
+                </center>
+            </td>
+        </tr>
+    </table>
+
 </div>
 </body>
 </html>

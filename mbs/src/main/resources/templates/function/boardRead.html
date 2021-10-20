@@ -44,9 +44,17 @@
         width: 50px;
         height: 30px;
     }
-    a:link { color: black; text-decoration: none;}
-    a:visited { color: black; text-decoration: none;}
-    a:hover { color: black; text-decoration: none;}
+    .linkA:link{
+        color: black; text-decoration: none;
+    }
+    .linkA:visited{
+        color: black; text-decoration: none;
+    }
+    .linkA:hover{
+        color: black; text-decoration: none;
+    }
+
+
 </style>
 <body>
 <td th:text="${session.member.memberName}"></td>님
@@ -88,19 +96,25 @@
 
                             <td>
                                 <form name="fileUpload_form" method="post" action="/board/fileUpload" enctype="multipart/form-data">
+                                    <input type="hidden" name="division" th:value="0">
                                     <input type="hidden" name="id" th:value="${board.id}">
                                     <input multiple type="file" name="files">
                                     <input type="submit" value="업로드">
                                 </form>
+                                <ul th:if="${board.getUploadFiles() != null}" th:each="file :${board.getUploadFiles()}">
+                                    <li><span th:text="${file.fileName}"></span>
+                                    <a href="#" th:href="@{/board/fileDownLoad(uuid=${file.getUuid()},fileName=${file.getFileName()})}">
+                                        download</a></li>
+                                </ul>
                             </td>
                         </tr>
                     </table>
                     <center>
                         <button class="btn">
-                            <a th:href="@{/board/update(id=${board.id},division=0)}">수정</a>
+                            <a class="linkA" th:href="@{/board/update(id=${board.id},division=0)}">수정</a>
                         </button>
                         <button class="btn">
-                            <a th:href="@{/board/delete(id=${board.id},division=0)}">삭제</a>
+                            <a class="linkA" th:href="@{/board/delete(id=${board.id},division=0)}">삭제</a>
                         </button>
                     </center>
                 </td>

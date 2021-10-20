@@ -2,6 +2,7 @@ package mbs_capsotme.mbs.repository;
 
 import mbs_capsotme.mbs.domain.Board;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityManager;
 import javax.swing.text.html.Option;
@@ -56,4 +57,5 @@ public class BoardRepository {
         em.flush();
         em.clear();
     }
+
 }

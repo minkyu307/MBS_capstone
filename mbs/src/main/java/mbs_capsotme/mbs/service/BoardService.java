@@ -1,23 +1,34 @@
 package mbs_capsotme.mbs.service;
 
+import lombok.extern.log4j.Log4j2;
 import mbs_capsotme.mbs.domain.Board;
+import mbs_capsotme.mbs.domain.UploadFiles;
 import mbs_capsotme.mbs.repository.BoardRepository;
+import mbs_capsotme.mbs.repository.UploadFileRepository;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Transactional
 @Component
+@Log4j2
 public class BoardService {
 
     private final BoardRepository boardRepository;
+    private final UploadFileRepository fileRepository;
 
     @Autowired
-    public BoardService(BoardRepository boardRepository) {
+    public BoardService(BoardRepository boardRepository, UploadFileRepository fileRepository) {
         this.boardRepository = boardRepository;
+        this.fileRepository = fileRepository;
     }
 
     public Long save(Board board) {
@@ -52,5 +63,26 @@ public class BoardService {
 
     public void clearPersist() {
         boardRepository.clearPersist();
+    }
+
+    public void fileUploadWithBoard(List<MultipartFile> files, Board board, String basePath) throws IOException {
+
+        log.info("uploadStart");
+        for(MultipartFile file : files) {
+            String originalName = file.getOriginalFilename();
+            String extension = file.getContentType();
+            UploadFiles uploadFiles = new UploadFiles();
+            String uuid = UUID.randomUUID().toString();
+            uploadFiles.setUuid(uuid);
+            uploadFiles.setFileName(originalName);
+            uploadFiles.setExtension(extension);
+            uploadFiles.setBoard(board);
+            fileRepository.save(uploadFiles);
+            String filePath = basePath + "/" + uuid + "__" +originalName;
+            File dest = new File(filePath);
+            file.transferTo(dest);
+        }
+        log.info("uploadEnd");
+
     }
 }

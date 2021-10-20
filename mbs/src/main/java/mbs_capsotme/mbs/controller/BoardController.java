@@ -5,6 +5,12 @@ import mbs_capsotme.mbs.domain.Board;
 import mbs_capsotme.mbs.domain.Member;
 import mbs_capsotme.mbs.domain.Memo;
 import mbs_capsotme.mbs.service.BoardService;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +24,10 @@ import javax.swing.filechooser.FileSystemView;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -25,6 +35,8 @@ import java.util.List;
 @Controller
 @Log4j2
 public class BoardController {
+
+    private static final String BASEPATH="C:\\Users\\김민규\\Desktop\\MBS_capstone\\mbs\\src\\main\\resources\\files";
 
     private final BoardService boardService;
 
@@ -167,14 +179,29 @@ public class BoardController {
     @RequestMapping(value = "/board/fileUpload")
     public String fileUpload(HttpServletRequest req, @RequestParam("files")List<MultipartFile> files) throws Exception{
 
-        String basePath = "C:\\Users\\김민규\\Desktop\\MBS_capstone\\mbs\\src\\main\\resources\\files";
+        int div = Integer.parseInt(req.getParameter("division"));
+        System.out.println("div1 = " + div);
+        boardService.fileUploadWithBoard(files,boardService.findOne(Long.parseLong(req.getParameter("id"))).get(),BASEPATH);
 
-        for(MultipartFile file : files) {
-            String originalName = file.getOriginalFilename();
-            String filePath = basePath + "/" + originalName;
-            File dest = new File(filePath);
-            file.transferTo(dest);
-        }
-        return "redirect:/board/boardRead?division=0&id="+req.getParameter("id");
+        System.out.println("div = " + div);
+        if (div == 1)
+            return "redirect:/board/boardRead?division=1&id="+req.getParameter("id");
+        else
+            return "redirect:/board/boardRead?division=0&id="+req.getParameter("id");
+    }
+
+    @RequestMapping(value = "/board/fileDownLoad")
+    public ResponseEntity<org.springframework.core.io.Resource> fileDownload(HttpServletRequest req) throws Exception{
+
+        String uuid = req.getParameter("uuid");
+        String fileName = req.getParameter("fileName");
+        Path path = Paths.get(BASEPATH+"/"+uuid+"__"+fileName);
+        String extension = Files.probeContentType(path);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentDisposition(ContentDisposition.builder("attachment").filename(fileName, StandardCharsets.UTF_8).build());
+        headers.add(HttpHeaders.CONTENT_TYPE, extension);
+
+        Resource resource = new InputStreamResource(Files.newInputStream(path));
+        return new ResponseEntity<>(resource,headers, HttpStatus.OK);
     }
 }
