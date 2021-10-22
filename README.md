@@ -22,3 +22,13 @@
 📚 **Tistory Blog**
 
 [https://sbed307.tistory.com/category/MBS웹사이트 개발일지(Senior Project)](https://sbed307.tistory.com/category/MBS%EC%9B%B9%EC%82%AC%EC%9D%B4%ED%8A%B8%20%EA%B0%9C%EB%B0%9C%EC%9D%BC%EC%A7%80%28Senior%20Project%29)
+
+### 현시점 해결해야할 문제들
+-없는파일 올릴시 에러나게하기
+-파일 올리기를 게시글작성할때
+-아이디 패스워드 검사 
+-패스워드 암호화
+-게시판 페이징
+-확장성있는 구조
+-대량 트랜잭션 대비
+-관리자 계정 및 페이지
