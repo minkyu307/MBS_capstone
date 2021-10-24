@@ -67,12 +67,12 @@ public class MemberController {
         try {
             member = memberService.findByLoginId(loginId).get();
         } catch (Exception e) {
-            model.addAttribute("loginError", "ID가 일치하지 않습니다.");
+            model.addAttribute("loginError", "ID 또는 비밀번호가 일치하지 않습니다.");
             return "home";
         }
 
         if (!password.equals(member.getPassword())) {
-            model.addAttribute("loginError", "비밀번호가 일치하지 않습니다.");
+            model.addAttribute("loginError", "ID 또는 비밀번호가 일치하지 않습니다.");
             return "home";
         }
 
