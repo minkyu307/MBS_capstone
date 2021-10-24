@@ -23,12 +23,12 @@ import java.util.UUID;
 public class BoardService {
 
     private final BoardRepository boardRepository;
-    private final UploadFileRepository fileRepository;
+    private final UploadFileRepository uploadFileRepository;
 
     @Autowired
     public BoardService(BoardRepository boardRepository, UploadFileRepository fileRepository) {
         this.boardRepository = boardRepository;
-        this.fileRepository = fileRepository;
+        this.uploadFileRepository = fileRepository;
     }
 
     public Long save(Board board) {
@@ -77,12 +77,19 @@ public class BoardService {
             uploadFiles.setFileName(originalName);
             uploadFiles.setExtension(extension);
             uploadFiles.setBoard(board);
-            fileRepository.save(uploadFiles);
+            uploadFileRepository.save(uploadFiles);
             String filePath = basePath + "/" + uuid + "__" +originalName;
             File dest = new File(filePath);
             file.transferTo(dest);
         }
         log.info("uploadEnd");
 
+    }
+
+    public void fileDeleteWithBoard(String uuid,File file){
+        if(file.exists()){
+            file.delete();
+            uploadFileRepository.deleteFile(uuid);
+        }
     }
 }

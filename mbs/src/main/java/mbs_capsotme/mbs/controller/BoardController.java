@@ -234,4 +234,18 @@ public class BoardController {
         Resource resource = new InputStreamResource(Files.newInputStream(path));
         return new ResponseEntity<>(resource,headers, HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/board/fileDelete")
+    public String fileDelete(HttpServletRequest request, HttpServletResponse response) throws Exception{
+
+        String savedFileName = request.getParameter("uuid") + "__" + request.getParameter("fileName");
+        File file = new File(BASEPATH+"\\"+savedFileName);
+        boardService.fileDeleteWithBoard(request.getParameter("uuid"),file);
+
+        int div = Integer.parseInt(request.getParameter("division"));
+        if (div == 1)
+            return "redirect:/board/boardRead?division=1&id="+request.getParameter("id");
+        else
+            return "redirect:/board/boardRead?division=0&id="+request.getParameter("id");
+    }
 }

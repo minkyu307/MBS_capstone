@@ -102,8 +102,11 @@
                                 </form>
                                 <ul th:if="${board.getUploadFiles() != null}" th:each="file :${board.getUploadFiles()}">
                                     <li><span th:text="${file.fileName}"></span>
-                                    <a href="#" th:href="@{/board/fileDownLoad(uuid=${file.getUuid()},fileName=${file.getFileName()})}">
-                                        download</a></li>
+                                        <a href="#" th:href="@{/board/fileDownLoad(uuid=${file.getUuid()},fileName=${file.getFileName()})}">
+                                            download</a>
+                                        <a href="#" th:href="@{/board/fileDelete(uuid=${file.getUuid()},fileName=${file.getFileName()},division=0,id=${board.id})}">
+                                            delete</a>
+                                    </li>
                                 </ul>
                             </td>
                         </tr>

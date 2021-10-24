@@ -19,5 +19,7 @@ public class UploadFileRepository {
         return file;
     }
 
-
+    public void deleteFile(String uuid){
+        em.createQuery("delete from UploadFiles u where uuid=?1").setParameter(1,uuid).executeUpdate();
+    }
 }
