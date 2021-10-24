@@ -165,11 +165,21 @@ public class BoardController {
             else
                 return "function/boardList";
         }
+        else {
+            if(div==1){
+                response.setContentType("text/html; charset=UTF-8");
+                PrintWriter out = response.getWriter();
+                out.println("<script>alert('찾으시는 글이 없습니다.'); location.href='/board/boardList?division=1';</script>");
+                out.flush();
+            }
+            else {
+                response.setContentType("text/html; charset=UTF-8");
+                PrintWriter out = response.getWriter();
+                out.println("<script>alert('찾으시는 글이 없습니다.'); location.href='/board/boardList?division=0';</script>");
+                out.flush();
+            }
+        }
 
-        response.setContentType("text/html; charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        out.println("<script>alert('찾으시는 글이 없습니다.'); location.href='/board/boardList';</script>");
-        out.flush();
         if (div == 1)
             return "redirect:/board/boardList?division=1";
         else
@@ -177,17 +187,37 @@ public class BoardController {
     }
 
     @RequestMapping(value = "/board/fileUpload")
-    public String fileUpload(HttpServletRequest req, @RequestParam("files")List<MultipartFile> files) throws Exception{
+    public String fileUpload(HttpServletRequest req, @RequestParam("files")List<MultipartFile> files, HttpServletResponse response) throws Exception{
 
+        String id = req.getParameter("id");
         int div = Integer.parseInt(req.getParameter("division"));
-        System.out.println("div1 = " + div);
-        boardService.fileUploadWithBoard(files,boardService.findOne(Long.parseLong(req.getParameter("id"))).get(),BASEPATH);
 
-        System.out.println("div = " + div);
+        if(files.get(0).isEmpty()==true){
+            if(div==1){
+                response.setContentType("text/html; charset=UTF-8");
+                PrintWriter out = response.getWriter();
+                out.println("<script>alert('파일을 선택해주세요'); location.href='/board/boardRead?division=1&id="+id+"';</script>");
+                out.flush();
+            }
+            else {
+                response.setContentType("text/html; charset=UTF-8");
+                PrintWriter out = response.getWriter();
+                out.println("<script>alert('파일을 선택해주세요'); location.href='/board/boardRead?division=0&id="+id+"';</script>");
+                out.flush();
+            }
+        }
+        else {
+            boardService.fileUploadWithBoard(files,boardService.findOne(Long.parseLong(req.getParameter("id"))).get(),BASEPATH);
+
+            if (div == 1)
+                return "redirect:/board/boardRead?division=1&id="+id;
+            else
+                return "redirect:/board/boardRead?division=0&id="+id;
+        }
         if (div == 1)
-            return "redirect:/board/boardRead?division=1&id="+req.getParameter("id");
+            return "redirect:/board/boardRead?division=1&id="+id;
         else
-            return "redirect:/board/boardRead?division=0&id="+req.getParameter("id");
+            return "redirect:/board/boardRead?division=0&id="+id;
     }
 
     @RequestMapping(value = "/board/fileDownLoad")

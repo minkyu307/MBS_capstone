@@ -106,7 +106,7 @@
                                 <input type="hidden" name="division" th:value="1">
                                 <input type="hidden" name="id" th:value="${board.id}">
                                 <input multiple type="file" name="files">
-                                <input class="btn" type="submit" value="업로드">
+                                <input type="submit" value="업로드">
                             </form>
                             <ul th:if="${board.getUploadFiles() != null}" th:each="file :${board.getUploadFiles()}">
                                 <li><span th:text="${file.fileName}"></span>
