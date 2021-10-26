@@ -1,12 +1,16 @@
 package mbs_capsotme.mbs.service;
 
 import mbs_capsotme.mbs.domain.Member;
+import mbs_capsotme.mbs.domain.MemberDetail;
 import mbs_capsotme.mbs.repository.MemberRepository;
+import mbs_capsotme.mbs.securityComponent.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,6 +40,11 @@ public class MemberService {
 
     public Optional<Member> findByLoginId(String loginId) {
         return memberRepository.findByLoginId(loginId);
+    }
+
+    public MemberDetail loadMemberByLoginId(String loginId) {
+        return memberRepository.findByLoginId(loginId)
+                .map(m->new MemberDetail(m, Collections.singleton(new SimpleGrantedAuthority(m.getRole().getValue())))).orElseThrow(()-> new UserNotFoundException(loginId));
     }
 
     /*public void addWebSocketSessionIdById(String id, String sessionId){

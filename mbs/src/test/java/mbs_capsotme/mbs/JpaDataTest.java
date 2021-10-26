@@ -1,9 +1,6 @@
 package mbs_capsotme.mbs;
 
-import mbs_capsotme.mbs.domain.Board;
-import mbs_capsotme.mbs.domain.Department;
-import mbs_capsotme.mbs.domain.Member;
-import mbs_capsotme.mbs.domain.Memo;
+import mbs_capsotme.mbs.domain.*;
 import mbs_capsotme.mbs.repository.MemberRepository;
 import mbs_capsotme.mbs.service.BoardService;
 import mbs_capsotme.mbs.service.DepartmentService;
@@ -12,6 +9,7 @@ import mbs_capsotme.mbs.service.MemoService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.EntityManager;
 import javax.swing.text.html.Option;
@@ -31,6 +29,9 @@ public class JpaDataTest {
     DepartmentService departmentService;
     @Autowired
     EntityManager em;
+    @Autowired
+    BCryptPasswordEncoder passwordEncoder;
+
 
     @Test
     void 부서만들기(){
@@ -43,7 +44,7 @@ public class JpaDataTest {
 
     @Test
     void 저장테스트() {
-        for (int i = 0; i < 5; i++) {
+        /*for (int i = 0; i < 5; i++) {
             Member member = new Member();
             member.setMemberName("A"+i);
             memberService.joinAndSave(member);
@@ -65,7 +66,16 @@ public class JpaDataTest {
             Department department = new Department();
             department.setNumberOfMember(i+1);
             departmentService.save(department);
-        }
+        }*/
+
+
+        Member member = new Member();
+        member.setLogin_id("1");
+        member.setPassword(passwordEncoder.encode("1"));
+        member.setMemberName("kim");
+        member.setLoginStatus(Status.OUT);
+        member.setRole(Role.ADMIN);
+        memberService.joinAndSave(member);
     }
 
 

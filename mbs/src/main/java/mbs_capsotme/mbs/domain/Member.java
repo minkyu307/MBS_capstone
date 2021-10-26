@@ -26,6 +26,9 @@ public class Member {
     private String sessionId;
 
     @Enumerated(EnumType.STRING)
+    private Role role;
+
+    @Enumerated(EnumType.STRING)
     private Status loginStatus;
 
     private String position;

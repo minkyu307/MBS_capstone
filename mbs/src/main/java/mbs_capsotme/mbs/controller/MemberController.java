@@ -56,33 +56,18 @@ public class MemberController {
     }
 
     //로그인시 id와 password 일치검사 후 상태를 IN으로 변경하고 세션에 저장
-    @RequestMapping(value = "/members/login")
-    public String logIn(MemberForm memberForm, Model model, HttpServletRequest req) {
+    @RequestMapping(value = "/success")
+    public String logIn(HttpServletRequest request) {
 
-        HttpSession session = req.getSession();
-        String loginId = memberForm.getLogin_id();
-        String password = memberForm.getPassword();
-        Member member;
-
-        try {
-            member = memberService.findByLoginId(loginId).get();
-        } catch (Exception e) {
-            model.addAttribute("loginError", "ID 또는 비밀번호가 일치하지 않습니다.");
-            return "home";
-        }
-
-        if (!password.equals(member.getPassword())) {
-            model.addAttribute("loginError", "ID 또는 비밀번호가 일치하지 않습니다.");
-            return "home";
-        }
+        HttpSession session = request.getSession();
+        String loginId = request.getParameter("id");
+        Member member = memberService.findByLoginId(loginId).get();
 
         member.setLoginStatus(Status.IN);
         session.setAttribute("member",member);
         member.setSessionId(session.getId());
         memberService.joinAndSave(member);
 
-        memberForm.setMemberName(member.getMemberName());
-        memberForm.setId(member.getId());
         return "division";
     }
 
