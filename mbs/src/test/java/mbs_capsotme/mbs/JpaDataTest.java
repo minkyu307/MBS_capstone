@@ -70,11 +70,11 @@ public class JpaDataTest {
 
 
         Member member = new Member();
-        member.setLogin_id("1");
-        member.setPassword(passwordEncoder.encode("1"));
-        member.setMemberName("kim");
+        member.setLogin_id("2");
+        member.setPassword(passwordEncoder.encode("2"));
+        member.setMemberName("kim2");
         member.setLoginStatus(Status.OUT);
-        member.setRole(Role.ADMIN);
+        member.setRole(Role.USER);
         memberService.joinAndSave(member);
     }
 
