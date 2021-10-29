@@ -1,10 +1,11 @@
 package mbs_capsotme.mbs.controller;
 
-import mbs_capsotme.mbs.domain.Department;
-import mbs_capsotme.mbs.domain.Member;
-import mbs_capsotme.mbs.domain.Status;
+import lombok.RequiredArgsConstructor;
+import mbs_capsotme.mbs.domain.*;
+import mbs_capsotme.mbs.service.BoardService;
 import mbs_capsotme.mbs.service.DepartmentService;
 import mbs_capsotme.mbs.service.MemberService;
+import mbs_capsotme.mbs.service.MemoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,22 +13,23 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
+@RequiredArgsConstructor
 @Controller
 public class MemberController {
 
     private final MemberService memberService;
     private final DepartmentService departmentService;
-
-    public MemberController(MemberService memberService, DepartmentService departmentService) {
-        this.memberService = memberService;
-        this.departmentService = departmentService;
-    }
+    private final MemoService memoService;
+    private final BoardService boardService;
 
 
     @GetMapping(value = "/members/join")
@@ -47,6 +49,7 @@ public class MemberController {
         member.setPosition(form.getPosition());
         member.setLoginStatus(Status.OUT);
         member.setCreateTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        member.setRole(Role.USER);
         Department department = departmentService.findOne(form.getDepartmentName()).get();
         department.setNumberOfMember(department.getNumberOfMember() + 1);
         departmentService.save(department);
@@ -57,7 +60,7 @@ public class MemberController {
 
     //로그인시 id와 password 일치검사 후 상태를 IN으로 변경하고 세션에 저장
     @RequestMapping(value = "/success")
-    public String logIn(HttpServletRequest request) {
+    public String logIn(HttpServletRequest request, Model model) {
 
         HttpSession session = request.getSession();
         String loginId = request.getParameter("id");
@@ -68,7 +71,35 @@ public class MemberController {
         member.setSessionId(session.getId());
         memberService.joinAndSave(member);
 
+        if (member.getRole().equals(Role.ADMIN)){
+            List<Member> members = memberService.findMembers();
+            List<Memo> memos = memoService.findMemos();
+            List<Board> boards = boardService.findAllBoards();
+            List<Department> departments = departmentService.findDepartments();
+            model.addAttribute("members",members);
+            model.addAttribute("memos",memos);
+            model.addAttribute("boards",boards);
+            model.addAttribute("departments",departments);
+            return "/admin";
+        }
+
         return "division";
+    }
+
+    @GetMapping(value = "/failure")
+    public void loginFailure(HttpServletRequest req, HttpServletResponse response) throws IOException {
+        response.setContentType("text/html; charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        out.println("<script>alert('아이디 또는 비밀번호가 잘못되었습니다.'); location.href='/home';</script>");
+        out.flush();
+    }
+
+    @GetMapping(value = "/accessDenied")
+    public void accessDenied(HttpServletRequest request, HttpServletResponse response) throws IOException{
+        response.setContentType("text/html; charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        out.println("<script>alert('인가받지 않은 사용자입니다.'); location.href='/members/logout';</script>");
+        out.flush();
     }
 
     //로그아웃시 상태를 out으로 변경하고 세션 종료

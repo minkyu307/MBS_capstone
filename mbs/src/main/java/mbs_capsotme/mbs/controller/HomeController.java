@@ -19,14 +19,6 @@ public class HomeController {
     }
     @GetMapping("/admin")
     public String admin(){
-        return "adminscc";
+        return "admin";
     }
-    /*@GetMapping("/success")
-    public String success(HttpServletRequest request){
-
-        String id = request.getParameter("id");
-        log.error("id="+id);
-
-        return "division";
-    }*/
 }

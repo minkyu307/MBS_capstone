@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import mbs_capsotme.mbs.service.MemberService;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,12 +14,17 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import javax.persistence.Basic;
+
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final MemberService memberService;
+    private final CustomLoginSuccessHandler customLoginSuccessHandler;
+    private final CustomLoginFailureHandler customLoginFailureHandler;
+    private final CustomAccessDeniedHandler customAccessDeniedHandler;
 
     // 정적 자원에 대해서는 Security 설정을 적용하지 않음.
     @Override
@@ -47,11 +53,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterBefore(customAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
         http.headers().frameOptions().disable();
+        http.exceptionHandling().accessDeniedHandler(customAccessDeniedHandler);
     }
 
     @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+    public BCryptPasswordEncoder bCryptPasswordEncoder(){
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public CustomAuthenticationProvider customAuthenticationProvider(){
+        return new CustomAuthenticationProvider(memberService,bCryptPasswordEncoder());
     }
 
 
@@ -59,21 +71,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public CustomAuthenticationFilter customAuthenticationFilter() throws Exception {
         CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManager());
         customAuthenticationFilter.setFilterProcessesUrl("/members/login");
-        customAuthenticationFilter.setAuthenticationSuccessHandler(customLoginSuccessHandler());
+        customAuthenticationFilter.setAuthenticationSuccessHandler(customLoginSuccessHandler);
+        customAuthenticationFilter.setAuthenticationFailureHandler(customLoginFailureHandler);
         customAuthenticationFilter.afterPropertiesSet();
         return customAuthenticationFilter;
 
     }
 
-    @Bean
-    public CustomLoginSuccessHandler customLoginSuccessHandler() {
-        return new CustomLoginSuccessHandler();
-    }
-
-    @Bean
-    public CustomAuthenticationProvider customAuthenticationProvider(){
-        return new CustomAuthenticationProvider(memberService,bCryptPasswordEncoder());
-    }
 
     @Override
     public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) {
