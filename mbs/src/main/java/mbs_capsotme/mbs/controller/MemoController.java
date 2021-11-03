@@ -7,6 +7,7 @@ import mbs_capsotme.mbs.service.MemoService;
 import org.dom4j.rule.Mode;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -52,6 +53,13 @@ public class MemoController {
             return "redirect:/memo/memoList?division=1";
         else
             return "redirect:/memo/memoList?division=0";
+    }
+
+    @GetMapping(value = "/memo/adminDelete")
+    public String adminDeleteMemo(HttpServletRequest req){
+        Long id = Long.parseLong(req.getParameter("id"));
+        memoService.deleteMemo(id);
+        return "redirect:/admin";
     }
 
     @RequestMapping(value = "/memo/newMemo")

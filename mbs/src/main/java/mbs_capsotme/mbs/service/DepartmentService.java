@@ -41,4 +41,8 @@ public class DepartmentService {
     public void clearPersist() {
         departmentRepository.clearPersist();
     }
+
+    public void deleteDepartment(Long id){
+        departmentRepository.deleteDepartment(id);
+    }
 }

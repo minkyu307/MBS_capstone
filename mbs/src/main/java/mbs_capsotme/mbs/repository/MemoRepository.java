@@ -38,7 +38,10 @@ public class MemoRepository {
 
     public void deleteMemo(Long id){
         em.createQuery("delete from Memo m where m.id=:mid").setParameter("mid",id).executeUpdate();
+    }
 
+    public void deleteMemoByWriterId(Long id){
+        em.createQuery("delete from Memo m where m.member.id=?1").setParameter(1,id).executeUpdate();
     }
 
     public void clearPersist() {

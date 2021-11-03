@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -140,6 +141,7 @@ public class BoardController {
     public String deleteBoard(HttpServletRequest req) {
 
         Long id = Long.parseLong(req.getParameter("id"));
+        boardService.fileDeleteWithBoardId(id);
         boardService.deleteBoard(id);
 
         int div = Integer.parseInt(req.getParameter("division"));
@@ -147,6 +149,15 @@ public class BoardController {
             return "redirect:/board/boardList?division=1";
         else
             return "redirect:/board/boardList?division=0";
+    }
+
+    @GetMapping(value = "/board/adminDelete")
+    public String adminDeleteBoard(HttpServletRequest req){
+
+        Long id = Long.parseLong(req.getParameter("id"));
+        boardService.fileDeleteWithBoardId(id);
+        boardService.deleteBoard(id);
+        return "redirect:/admin";
     }
 
     @RequestMapping(value = "/board/searchBoard")

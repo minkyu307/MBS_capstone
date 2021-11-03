@@ -6,6 +6,7 @@ import mbs_capsotme.mbs.service.BoardService;
 import mbs_capsotme.mbs.service.DepartmentService;
 import mbs_capsotme.mbs.service.MemberService;
 import mbs_capsotme.mbs.service.MemoService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,6 +31,7 @@ public class MemberController {
     private final DepartmentService departmentService;
     private final MemoService memoService;
     private final BoardService boardService;
+    private final BCryptPasswordEncoder passwordEncoder;
 
 
     @GetMapping(value = "/members/join")
@@ -44,7 +46,7 @@ public class MemberController {
         member.setEmail(form.getEmail());
         member.setLogin_id(form.getLogin_id());
         member.setMemberName(form.getMemberName());
-        member.setPassword(form.getPassword());
+        member.setPassword(passwordEncoder.encode(form.getPassword()));
         member.setPhoneNumber(form.getPhoneNumber());
         member.setPosition(form.getPosition());
         member.setLoginStatus(Status.OUT);
@@ -56,6 +58,19 @@ public class MemberController {
         member.setDepartment(department);
         memberService.joinAndSave(member);
         return "redirect:/";
+    }
+
+    @GetMapping(value = "/member/delete")
+    public String deleteMember(HttpServletRequest req){
+
+        Long id=Long.parseLong(req.getParameter("id"));
+        Board board = boardService.findBoardWithWriterId(id);
+
+        boardService.fileDeleteWithBoardId(board.getId());
+        boardService.deleteBoardByWriterId(id);
+        memoService.deleteMemoByWriterId(id);
+        memberService.deleteMember(id);
+        return "redirect:/admin";
     }
 
     //로그인시 id와 password 일치검사 후 상태를 IN으로 변경하고 세션에 저장
@@ -72,15 +87,7 @@ public class MemberController {
         memberService.joinAndSave(member);
 
         if (member.getRole().equals(Role.ADMIN)){
-            List<Member> members = memberService.findMembers();
-            List<Memo> memos = memoService.findMemos();
-            List<Board> boards = boardService.findAllBoards();
-            List<Department> departments = departmentService.findDepartments();
-            model.addAttribute("members",members);
-            model.addAttribute("memos",memos);
-            model.addAttribute("boards",boards);
-            model.addAttribute("departments",departments);
-            return "/admin";
+            return "redirect:/admin";
         }
 
         return "division";
@@ -114,5 +121,18 @@ public class MemberController {
         session.invalidate();
 
         return "redirect:/";
+    }
+
+    @GetMapping("/admin")
+    public String admin(Model model){
+        List<Member> members = memberService.findMembers();
+        List<Memo> memos = memoService.findMemos();
+        List<Board> boards = boardService.findAllBoards();
+        List<Department> departments = departmentService.findDepartments();
+        model.addAttribute("members",members);
+        model.addAttribute("memos",memos);
+        model.addAttribute("boards",boards);
+        model.addAttribute("departments",departments);
+        return "admin";
     }
 }

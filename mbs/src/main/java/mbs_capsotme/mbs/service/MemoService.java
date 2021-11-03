@@ -42,6 +42,8 @@ public class MemoService {
         memoRepository.deleteMemo(id);
     }
 
+    public void deleteMemoByWriterId(Long id){memoRepository.deleteMemoByWriterId(id);}
+
     public void clearPersist() {
         memoRepository.clearPersist();
     }

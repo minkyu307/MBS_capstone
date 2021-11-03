@@ -27,6 +27,10 @@ public class BoardRepository {
         return Optional.ofNullable(em.find(Board.class, id));
     }
 
+    public Board findByWriterId(Long id){
+        return em.createQuery("select b from Board b where b.member.id=?1",Board.class).setParameter(1,id).getSingleResult();
+    }
+
     public List<Board> findAll() {
         return em.createQuery("select b from Board b", Board.class).getResultList();
     }
@@ -51,6 +55,10 @@ public class BoardRepository {
         search = "%"+search+"%";
         return em.createQuery("select b from Board b where b.contents like ?1")
                 .setParameter(1,search).getResultList();
+    }
+
+    public void deleteBoardByWriterId(Long id){
+        em.createQuery("delete from Board b where b.member.id=?1").setParameter(1,id).executeUpdate();
     }
 
     public void clearPersist() {

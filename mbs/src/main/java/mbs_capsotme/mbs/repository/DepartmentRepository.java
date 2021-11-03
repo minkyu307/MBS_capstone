@@ -35,6 +35,10 @@ public class DepartmentRepository {
         return em.createQuery("select d from Department d", Department.class).getResultList();
     }
 
+    public void deleteDepartment(Long id){
+        em.createQuery("delete from Department d where d.id=?1").setParameter(1,id).executeUpdate();
+    }
+
     public void clearPersist() {
         em.flush();
         em.clear();

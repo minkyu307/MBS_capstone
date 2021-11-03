@@ -44,6 +44,10 @@ public class BoardService {
         return boardRepository.findById(boardId);
     }
 
+    public Board findBoardWithWriterId(Long id){
+        return boardRepository.findByWriterId(id);
+    }
+
     public void deleteBoard(Long id) {
         boardRepository.deleteBoard(id);
     }
@@ -91,5 +95,13 @@ public class BoardService {
             file.delete();
             uploadFileRepository.deleteFile(uuid);
         }
+    }
+
+    public void deleteBoardByWriterId(Long id){
+        boardRepository.deleteBoardByWriterId(id);
+    }
+
+    public void fileDeleteWithBoardId(Long id){
+        uploadFileRepository.deleteFileByBoardId(id);
     }
 }

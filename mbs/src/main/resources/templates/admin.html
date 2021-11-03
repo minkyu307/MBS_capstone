@@ -39,11 +39,12 @@
             border: 1px solid #ccc;
         }
         table.type07 td {
-            width: 100px;
+            width: 120px;
             padding: 5px;
             vertical-align: center;
             border: 1px solid #ccc;
         }
+
         a:link { color: black; text-decoration: none;}
         a:visited { color: black; text-decoration: none;}
         a:hover { color: black; text-decoration: none;}
@@ -56,30 +57,97 @@ ADMIN
 <button onclick="location.href='/division/notDivision'" style="background-color: rgb(240, 240, 255)">Main</button>
 <div class="board_wrap">
     <div class="header">
-        ORGANIZATION CHART
+        MANAGEMENT PAGE
     </div>
 
-    <table class="type07" th:each="department: ${departments}">
+    <table class="type07" >
         <thead>
         <tr>
-            <th scope="cols" th:text="${department.departmentName}">null</th>
-            <th scope="cols" colspan="4">회원정보</th>
+            <th scope="cols" colspan="4">부서</th>
         </tr>
         </thead>
-        <tbody th:each="member: ${department.getMembers()}">
+        <tbody th:each="department: ${departments}">
         <tr>
-            <th scope="row" th:text="${member.getMemberName()}"></th>
-            <td th:text="${member.getEmail()}">email</td>
+            <th scope="row" th:text="${department.departmentName}"></th>
+            <td th:text="${department.findDirectorByMemberId(members).memberName}">directorName</td>
+            <td th:text="'부서인원: '+${department.getNumberOfMember()}">numberofmember</td>
             <td>
-                <a th:if="${member.getLoginStatus().toString().equals('IN')}" th:href="@{/chat/goChat(division=0)}" th:text="${member.getLoginStatus()}"></a>
-                <a th:if="${member.getLoginStatus().toString().equals('OUT')}" th:text="${member.getLoginStatus()}"></a>
+                <button class="btndel">
+                    <a th:href="@{/organization/delete(id=${department.id})}">삭제</a>
+                </button>
             </td>
-            <td th:text="${member.getPhoneNumber()}">call</td>
-            <td th:text="${member.getPosition()}">position</td>
         </tr>
         </tbody>
     </table>
 
+    <table class="type07" >
+        <thead>
+        <tr>
+            <th scope="cols" colspan="8">회원</th>
+        </tr>
+        </thead>
+        <tbody th:each="member: ${members}">
+        <tr>
+            <th scope="row" th:text="${member.memberName}"></th>
+            <td th:text="${member.address}"></td>
+            <td th:text="${member.email}"></td>
+            <td th:text="${member.loginStatus}"></td>
+            <td th:text="${member.phoneNumber}"></td>
+            <td th:if="${not #strings.isEmpty(member.getDepartment())}" th:text="${member.department.departmentName}"></td>
+            <td th:if="${#strings.isEmpty(member.getDepartment())}" th:text="소속없음"></td>
+            <td th:text="${member.position}"></td>
+            <td>
+                <button class="btndel">
+                    <a th:href="@{/member/delete(id=${member.id})}">삭제</a>
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <table class="type07" >
+        <thead>
+        <tr>
+            <th scope="cols" colspan="7">게시판</th>
+        </tr>
+        </thead>
+        <tbody th:each="board: ${boards}">
+        <tr>
+            <th scope="row" th:text="${board.title}"></th>
+            <td th:text="${board.contents}"></td>
+            <td th:text="${board.createTime}"></td>
+            <td th:text="${board.lastModifiedTime}"></td>
+            <td th:text="${board.views}"></td>
+            <td th:text="${board.getMember().getMemberName()}"></td>
+            <td>
+                <button class="btndel">
+                    <a th:href="@{/board/adminDelete(id=${board.id})}">삭제</a>
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <table class="type07" >
+        <thead>
+        <tr>
+            <th scope="cols" colspan="7">메모</th>
+        </tr>
+        </thead>
+        <tbody th:each="memo: ${memos}">
+        <tr>
+            <th scope="row" th:text="${memo.contents}"></th>
+            <td th:text="${memo.createTime}"></td>
+            <td th:text="${memo.lastModifiedTime}"></td>
+            <td th:text="${memo.getMember().getMemberName()}"></td>
+            <td>
+                <button class="btndel">
+                    <a th:href="@{/memo/adminDelete(id=${memo.id})}">삭제</a>
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 
 </div>
 </body>

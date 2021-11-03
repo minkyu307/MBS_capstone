@@ -22,4 +22,8 @@ public class UploadFileRepository {
     public void deleteFile(String uuid){
         em.createQuery("delete from UploadFiles u where uuid=?1").setParameter(1,uuid).executeUpdate();
     }
+
+    public void deleteFileByBoardId(Long id){
+        em.createQuery("delete from UploadFiles u where u.board.id=?1").setParameter(1,id).executeUpdate();
+    }
 }

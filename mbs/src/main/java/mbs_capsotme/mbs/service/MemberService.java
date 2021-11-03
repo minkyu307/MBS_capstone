@@ -55,6 +55,15 @@ public class MemberService {
         memberRepository.deleteSessionIdById(id);
     }*/
 
+    public List<Member> findMembersByDepartmentId(Long id){
+
+        return memberRepository.findMembersByDepartmentId(id);
+    }
+
+    public void deleteMember(Long id){
+        memberRepository.deleteMember(id);
+    }
+
     public void clearPersist() {
         memberRepository.clearPersist();
     }

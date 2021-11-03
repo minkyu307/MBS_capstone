@@ -36,16 +36,11 @@ public class JpaDataTest {
     @Test
     void 부서만들기(){
         Department d= new Department();
-        d.setDirector_id(52L);
-        d.setDepartmentName("인사과");
+
+        d.setDepartmentName("비서과");
         d.setNumberOfMember(0);
         departmentService.save(d);
 
-        Department d1 = new Department();
-        d1.setDirector_id(54L);
-        d1.setDepartmentName("총무과");
-        d1.setNumberOfMember(0);
-        departmentService.save(d1);
     }
 
     @Test

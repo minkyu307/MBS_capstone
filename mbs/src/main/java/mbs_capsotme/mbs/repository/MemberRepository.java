@@ -47,6 +47,13 @@ public class MemberRepository {
                 .setParameter(1, id).executeUpdate();
     }*/
 
+    public List<Member> findMembersByDepartmentId(Long id){
+        return em.createQuery("select m from Member m where m.department.id=?1").setParameter(1,id).getResultList();
+    }
+
+    public void deleteMember(Long id){
+        em.createQuery("delete from Member m where m.id=?1").setParameter(1,id).executeUpdate();
+    }
 
     public void clearPersist() {
         em.flush();
