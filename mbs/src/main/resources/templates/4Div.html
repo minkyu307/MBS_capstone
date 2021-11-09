@@ -1,21 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
+<script src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
+<style>
+    .btn{
+        background:#1AAB8A;
+        color:#fff;
+        border:none;
+        cursor:pointer;
+        transition:800ms ease all;
+        outline:none;
+    }
+    .btn:hover{
+        background:rgb(240, 240, 255);
+        color:black;
+    }
+</style>
 <body>
 <div style="padding-bottom: 3px">
     <td th:text="${session.member.memberName}" align="left"></td>님
     <button onclick="location.href='/members/logout'" style="background-color: rgb(240, 240, 255)" align="left">LogOut</button>
 </div>
-<iframe src="/division/divSelect" style="display:inline-block; width:48vw; height: 48vh; border: 0;" align="left" frameborder="0"
-        framespacing="0"></iframe>
-<iframe src="/division/divSelect" style="display:inline-block; width:48vw; height: 48vh;  border: 0; " align="right" frameborder="0"
-        framespacing="0"></iframe>
-<iframe src="/division/divSelect" style="display:inline-block; width:48vw; height: 48vh;  border: 0; " align="left" frameborder="0"
-        framespacing="0"></iframe>
-<iframe src="/division/divSelect" style="display:inline-block; width:48vw; height: 48vh;  border: 0; " align="right" frameborder="0"
-        framespacing="0"></iframe>
+<div style="margin-bottom: 5px;">
+    <button class="btn" id="wide1" style="float: left">펼치기</button>
+    <button class="btn" id="wide2" style="float: right;">펼치기</button>
+    <br>
+</div>
+<div id="div1" style="display: block; width: 99vw; height: 45.5vh;">
+    <iframe id="if1" src="/division/divSelect" style="display:inline-block; width:49.5vw; height: 45.5vh; border: 0;" align="left" frameborder="0"
+            framespacing="0"></iframe>
+    <iframe id="if2" src="/division/divSelect" style="display:inline-block; width:49.5vw; height: 45.5vh; border: 0; " align="right" frameborder="0"
+            framespacing="0"></iframe>
+</div>
+<div id="div2" style="display: block; width: 99vw; height: 45.5vh;">
+    <iframe id="if3" src="/division/divSelect" style="display:inline-block; width:49.5vw; height: 45.5vh;  border: 0; " align="left" frameborder="0"
+            framespacing="0"></iframe>
+    <iframe id="if4" src="/division/divSelect" style="display:inline-block; width:49.5vw; height: 45.5vh;  border: 0; " align="right" frameborder="0"
+            framespacing="0"></iframe>
+</div>
+<div>
+    <button class="btn" id="wide3" style="float: left;">펼치기</button>
+    <button class="btn" id="wide4" style="float: right;">펼치기</button>
+</div>
+
 </body>
+<script type="text/javascript">
+    $(document).ready(function() {
+        let i=0;
+        $("#wide1").click(function() {
+            if (i==0){
+                $(this).html('접기');
+                $("#if2,#if3,#if4,#wide2,#wide3,#wide4").css("visibility","hidden");
+                $("#if2,#if3,#if4").css("display","none");
+                $("#if1").css("width","99vw");
+                $("#if1").css("height","91vh");
+                i=1;
+            }
+            else if(i==1){
+                $(this).html('펼치기');
+                $("#if1").css("width","49.5vw");
+                $("#if1").css("height","45.5vh");
+                $("#if2,#if3,#if4,#wide2,#wide3,#wide4").css("visibility","visible");
+                $("#if2,#if3,#if4").css("display","inline-block");
+                i=0;
+            }
+        });
+        $("#wide2").click(function() {
+            if (i==0){
+                $(this).html('접기');
+                $("#if1,#if3,#if4,#wide1,#wide3,#wide4").css("visibility","hidden");
+                $("#if1,#if3,#if4").css("display","none");
+                $("#if2").css("width","99vw");
+                $("#if2").css("height","91vh");
+                i=1;
+            }
+            else if(i==1){
+                $(this).html('펼치기');
+                $("#if2").css("width","49.5vw");
+                $("#if2").css("height","45.5vh");
+                $("#if1,#if3,#if4,#wide1,#wide3,#wide4").css("visibility","visible");
+                $("#if1,#if3,#if4").css("display","inline-block");
+                i=0;
+            }
+        });
+        $("#wide3").click(function() {
+            if (i==0){
+                $(this).html('접기');
+                $("#if2,#if1,#if4,#wide2,#wide1,#wide4").css("visibility","hidden");
+                $("#if2,#if1,#if4").css("display","none");
+                $("#div1").css("display","none");
+                $("#if3").css("width","99vw");
+                $("#if3").css("height","91vh");
+                i=1;
+            }
+            else if(i==1){
+                $(this).html('펼치기');
+                $("#if3").css("width","49.5vw");
+                $("#if3").css("height","45.5vh");
+                $("#div1").css("display","block");
+                $("#if2,#if1,#if4,#wide1,#wide2,#wide4").css("visibility","visible");
+                $("#if2,#if1,#if4").css("display","inline-block");
+                i=0;
+            }
+        });
+        $("#wide4").click(function() {
+            if (i==0){
+                $(this).html('접기');
+                $("#if2,#if3,#if1,#wide2,#wide3,#wide1").css("visibility","hidden");
+                $("#if2,#if3,#if1").css("display","none");
+                $("#div1").css("display","none");
+                $("#if4").css("width","99vw");
+                $("#if4").css("height","91vh");
+                i=1;
+            }
+            else if(i==1){
+                $(this).html('펼치기');
+                $("#if4").css("width","49.5vw");
+                $("#if4").css("height","45.5vh");
+                $("#div1").css("display","block");
+                $("#if2,#if3,#if1,#wide2,#wide3,#wide1").css("visibility","visible");
+                $("#if2,#if3,#if1").css("display","inline-block");
+                i=0;
+            }
+        });
+    });
+</script>
 </html>
