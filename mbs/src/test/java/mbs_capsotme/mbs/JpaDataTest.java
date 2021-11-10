@@ -37,7 +37,7 @@ public class JpaDataTest {
     void 부서만들기(){
         Department d= new Department();
 
-        d.setDepartmentName("비서과");
+        d.setDepartmentName("지원과");
         d.setNumberOfMember(0);
         departmentService.save(d);
 
