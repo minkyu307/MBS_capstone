@@ -110,7 +110,7 @@ public class MemberController {
     }
 
     //로그아웃시 상태를 out으로 변경하고 세션 종료
-    @RequestMapping(value = "/members/logout")
+    /*@RequestMapping(value = "/members/logout")
     public String logOut(HttpServletRequest req) {
         HttpSession session = req.getSession();
         Member member = (Member) session.getAttribute("member");
@@ -120,6 +120,14 @@ public class MemberController {
         memberService.joinAndSave(newMember);
         session.invalidate();
 
+        return "redirect:/";
+    }*/
+
+    //로그아웃시 상태를 out으로 변경하고 세션 종료
+    @GetMapping(value = "/members/logout")
+    public String logOut(HttpServletRequest req) {
+
+        memberService.logOut(req);
         return "redirect:/";
     }
 

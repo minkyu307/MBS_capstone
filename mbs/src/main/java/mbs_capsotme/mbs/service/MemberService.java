@@ -2,6 +2,7 @@ package mbs_capsotme.mbs.service;
 
 import mbs_capsotme.mbs.domain.Member;
 import mbs_capsotme.mbs.domain.MemberDetail;
+import mbs_capsotme.mbs.domain.Status;
 import mbs_capsotme.mbs.repository.MemberRepository;
 import mbs_capsotme.mbs.securityComponent.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -66,5 +69,15 @@ public class MemberService {
 
     public void clearPersist() {
         memberRepository.clearPersist();
+    }
+
+    public void logOut(HttpServletRequest req){
+        HttpSession session = req.getSession();
+        Long id = ((Member) session.getAttribute("member")).getId();
+        Member member = this.findOne(id).get();
+        member.setLoginStatus(Status.OUT);
+        member.setSessionId(null);
+        this.joinAndSave(member);
+        session.invalidate();
     }
 }
