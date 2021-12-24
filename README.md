@@ -1,5 +1,5 @@
 # MBS_capstone procect preview
-### 프로젝트 설명
+### 프로젝트 설명 - 최종보고서 참조
 
 처음 SpringBoot와 JPA를 적용한 프로젝트로 컴퓨터 작업시 여러 소프트웨어나 툴을 옮겨가며 작업하는것이 귀찮고 비효율적이라 생각해 만들기 시작한 프로젝트.  
 
@@ -14,7 +14,6 @@
 - View화면 구성 : HTML, CSS, Javascript
 - 언어 : JAVA 11
 - 타겟 클라이언트 : Chrome, Edge
-    
     
 
 ### 개발 일지
